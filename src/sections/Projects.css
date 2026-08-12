@@ -333,22 +333,72 @@
 }
 
 /* ---------------- responsive ---------------- */
+/* Desktop keeps the full write-up; the condensed list stays hidden. */
+.show__points--short {
+  display: none;
+}
+
 @media (max-width: 980px) {
   .show__main,
   .show__main.is-flipped {
     grid-template-columns: 1fr;
   }
-  /* Schematic always sits above the text once stacked. */
+
+  /* Lead with what the project *is*, then show the schematic. Reading a
+     dense diagram before any context is backwards on a narrow screen. */
+  .show__main .show__body,
+  .show__main.is-flipped .show__body {
+    order: 1;
+  }
   .show__main .show__visual,
   .show__main.is-flipped .show__visual {
-    order: 1;
+    order: 2;
     min-height: 280px;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid var(--line);
+    border-top: 1px solid var(--line);
   }
-  .show__main .show__body,
-  .show__main.is-flipped .show__body {
-    order: 2;
+
+  /* Swap the full bullet list for the condensed one. */
+  .show__points {
+    display: none;
+  }
+  .show__points--short {
+    display: flex;
+  }
+}
+
+@media (max-width: 620px) {
+  /* The schematics carry a lot of labelled detail. Squeezed to phone
+     width the 560-unit viewBox scales to ~0.6, rendering 9px type at
+     about 5px. Scroll the panel sideways at a legible size instead of
+     shrinking it into illegibility — the clipped edge is its own hint. */
+  .show__visual {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .show__visual > .pv {
+    min-width: 500px;
+  }
+
+  .show__body {
+    padding: 22px 18px;
+  }
+  .show__title {
+    font-size: clamp(23px, 6.4vw, 28px);
+  }
+  .show__points--short li {
+    font-size: 13px;
+  }
+
+  /* The rule between meta items has nowhere to go once wrapped. */
+  .show__meta {
+    flex-wrap: wrap;
+    gap: 6px 12px;
+  }
+  .show__meta i {
+    display: none;
   }
 }

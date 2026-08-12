@@ -90,11 +90,22 @@ function FeaturedCard({ p, flip }) {
         <h3 className="show__title">{p.title}</h3>
         <p className="show__tagline">{p.tagline}</p>
 
+        {/* Both lists ship; CSS picks one per breakpoint. Cheaper and
+            flash-free versus a matchMedia hook, and display:none keeps the
+            hidden one out of the accessibility tree too. */}
         <ul className="show__points">
           {p.highlights.map((h) => (
             <li key={h}>{h}</li>
           ))}
         </ul>
+
+        {p.short && (
+          <ul className="show__points show__points--short">
+            {p.short.map((h) => (
+              <li key={h}>{h}</li>
+            ))}
+          </ul>
+        )}
 
         <div className="show__stack">
           {p.stack.map((s) => (

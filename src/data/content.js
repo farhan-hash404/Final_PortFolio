@@ -103,6 +103,12 @@ export const featuredProjects = [
       'A multi-agent content system: one topic in, researched and fact-checked long-form out — then repurposed into five publishing formats.',
     stack: ['Python', 'LangGraph', 'LangChain', 'LLMs', 'FastAPI', 'Next.js'],
     visual: 'factory',
+    /* Condensed for narrow screens — the full `highlights` below are far
+       too much to scroll past on a phone. */
+    short: [
+      'An orchestrator agent researches the topic from trusted sources and builds the outline before anything is written.',
+      'A blog agent drafts it, an evaluation gate scores and regenerates until it passes, then it fans out into five publishing formats.',
+    ],
     highlights: [
       'Built an orchestrator agent that takes a single topic, searches the web for authoritative sources, synthesises the research, and produces a structured content outline for the next agent to work from.',
       'Added a blog generation agent that drafts the full article against that research and outline, keeping the output factually consistent with the sources rather than free-generating from the prompt.',
@@ -122,6 +128,10 @@ export const featuredProjects = [
     stack: ['Python', 'LLMs', 'Multi-Agent', 'FastAPI'],
     visual: 'court',
     live: true,
+    short: [
+      'Argue a live case against an AI opposing counsel that raises real legal issues and challenges weak reasoning.',
+      'An AI judge scores legal reasoning, evidence use and rebuttal handling against a fixed rubric, returning a score with feedback.',
+    ],
     highlights: [
       'Building a courtroom simulation where a lawyer or law student takes the advocate role — presenting arguments, handling counterarguments, and defending a position against an AI opposing counsel.',
       'Developing the opposing-counsel agent to argue the other side properly: raising relevant legal issues, challenging weak reasoning, and responding in context rather than replying like a chatbot.',
@@ -140,6 +150,10 @@ export const featuredProjects = [
       "A 2D fighting game whose opponent isn't scripted and isn't a pre-trained checkpoint — it runs PPO live in the browser, learning from you mid-fight.",
     stack: ['TypeScript', 'HTML5 Canvas', 'Vite', 'PPO', 'PyTorch', 'Gymnasium'],
     visual: 'ppo',
+    short: [
+      'The opponent runs real PPO live in the browser — network, backprop and Adam all hand-rolled, 51 KB, no ML libraries.',
+      'It learns from you mid-fight: 12/12 rounds won in 258 frames, up from 11/12 in 619 with the scripted prior stripped off.',
+    ],
     highlights: [
       'Hand-rolled the entire neural network — Linear layers, manual backprop, Adam — with no TensorFlow.js, ONNX or WASM, shipping the whole game and agent in 51 KB (17 KB gzipped) with zero runtime dependencies.',
       'Implemented real PPO on an actor-critic MLP (46-dim observation → 2×64 tanh trunk → 15-action policy head + value head): GAE(λ) advantages, clipped surrogate objective, entropy bonus, grad-norm clipping and target-KL early stopping, updating every 128 frames so learning is visible mid-fight.',
