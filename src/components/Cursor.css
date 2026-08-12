@@ -1,0 +1,152 @@
+body.cursor-custom,
+body.cursor-custom * {
+  cursor: none !important;
+}
+
+.cur {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+}
+.cur.is-on {
+  opacity: 1;
+}
+
+.cur__dot,
+.cur__ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+/* --- dot: exact position, no easing --- */
+.cur__dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transition:
+    width 0.3s var(--ease),
+    height 0.3s var(--ease),
+    opacity 0.3s var(--ease),
+    background 0.3s var(--ease);
+}
+
+/* --- ring: trails behind --- */
+.cur__ring {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: transparent;
+  transition:
+    width 0.38s var(--ease),
+    height 0.38s var(--ease),
+    background 0.38s var(--ease),
+    border-color 0.38s var(--ease),
+    border-radius 0.38s var(--ease),
+    opacity 0.3s var(--ease);
+}
+
+.cur__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--accent-ink);
+  opacity: 0;
+  transform: scale(0.7);
+  transition:
+    opacity 0.25s var(--ease),
+    transform 0.35s var(--ease);
+  white-space: nowrap;
+}
+
+/* ---------- link / button ---------- */
+.cur--link .cur__ring {
+  width: 58px;
+  height: 58px;
+  border-color: var(--line-accent);
+  background: var(--accent-soft);
+  backdrop-filter: blur(1px);
+}
+.cur--link .cur__dot {
+  width: 4px;
+  height: 4px;
+  opacity: 0.85;
+}
+
+/* ---------- project cards: filled "VIEW" puck ---------- */
+.cur--view .cur__ring {
+  width: 84px;
+  height: 84px;
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 42px var(--accent-glow);
+}
+.cur--view .cur__label {
+  opacity: 1;
+  transform: scale(1);
+}
+.cur--view .cur__dot {
+  opacity: 0;
+}
+
+/* ---------- horizontal drag rails ---------- */
+.cur--drag .cur__ring {
+  width: 74px;
+  height: 74px;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--line-2);
+  backdrop-filter: blur(2px);
+}
+.cur--drag .cur__label {
+  opacity: 1;
+  transform: scale(1);
+  color: var(--ink);
+}
+.cur--drag .cur__dot {
+  opacity: 0;
+}
+
+/* ---------- text fields: I-beam ---------- */
+.cur--text .cur__ring {
+  width: 2px;
+  height: 26px;
+  border-radius: 2px;
+  background: var(--accent);
+  border-color: transparent;
+}
+.cur--text .cur__dot {
+  opacity: 0;
+}
+
+/* ---------- press feedback ---------- */
+.cur.is-pressed .cur__ring {
+  transform-origin: center;
+  filter: brightness(1.15);
+}
+.cur.is-pressed .cur__dot {
+  width: 12px;
+  height: 12px;
+}
+
+/* Touch devices and reduced-motion users keep the system cursor. */
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cur {
+    display: none;
+  }
+  body.cursor-custom,
+  body.cursor-custom * {
+    cursor: auto !important;
+  }
+  body.cursor-custom a,
+  body.cursor-custom button {
+    cursor: pointer !important;
+  }
+}

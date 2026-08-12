@@ -1,0 +1,50 @@
+:root {
+  /* ---- Surface ---- */
+  --bg: #090909;
+  --bg-elev: #0e0e0e;
+  --panel: #111111;
+  --panel-2: #151515;
+  --panel-hover: #1a1a1a;
+
+  /* ---- Ink ---- */
+  --ink: #f2f2f0;
+  --ink-2: #a8a8a3;
+  --ink-3: #6e6e69;
+  --ink-4: #494945;
+
+  /* ---- Accent ---- */
+  --accent: #d9f227;
+  --accent-dim: #b6cc16;
+  --accent-ink: #0a0a0a;
+  --accent-soft: rgba(217, 242, 39, 0.1);
+  --accent-glow: rgba(217, 242, 39, 0.35);
+
+  /* ---- Lines ---- */
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.14);
+  --line-accent: rgba(217, 242, 39, 0.32);
+
+  /* ---- Type ---- */
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  /* ---- Rhythm ---- */
+  --rail-w: 264px;
+  --gut: clamp(20px, 3.4vw, 56px);
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-sm: 9px;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur: 0.45s;
+
+  /* ---- Depth ---- */
+  --shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.9);
+  --shadow-accent: 0 18px 50px -18px rgba(217, 242, 39, 0.25);
+}
+
+/* Light mode is deliberately not offered — the design is a single dark
+   composition and a washed-out inverse would weaken it. */

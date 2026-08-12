@@ -1,0 +1,83 @@
+.stack {
+  padding: clamp(56px, 9vh, 104px) 0;
+  border-top: 1px solid var(--line);
+}
+
+.stack__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stack__cell {
+  padding: 26px 28px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background 0.35s var(--ease);
+}
+.stack__cell:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* strip the outer edges so the card border isn't doubled */
+.stack__cell:nth-child(2n) {
+  border-right: none;
+}
+.stack__cell:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.stack__group {
+  font-size: 11px;
+  color: var(--accent);
+}
+
+.stack__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 16px;
+}
+
+.stack__item {
+  position: relative;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink-2);
+  transition: color 0.25s var(--ease);
+  cursor: default;
+}
+.stack__item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s var(--ease);
+}
+.stack__item:hover {
+  color: var(--ink);
+}
+.stack__item:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  .stack__grid {
+    grid-template-columns: 1fr;
+  }
+  .stack__cell,
+  .stack__cell:nth-child(2n) {
+    border-right: none;
+  }
+  .stack__cell {
+    border-bottom: 1px solid var(--line);
+  }
+  .stack__cell:last-child {
+    border-bottom: none;
+  }
+  .stack__cell:nth-last-child(2) {
+    border-bottom: 1px solid var(--line);
+  }
+}

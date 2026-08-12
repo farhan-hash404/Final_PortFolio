@@ -1,0 +1,42 @@
+.shell {
+  position: relative;
+  z-index: 1;
+  margin-left: var(--rail-w);
+  min-height: 100vh;
+}
+
+.shell__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--gut);
+}
+
+/* thin reading-progress bar across the top of the content column */
+.progress {
+  position: fixed;
+  top: 0;
+  left: var(--rail-w);
+  right: 0;
+  z-index: 80;
+  height: 2px;
+  background: transparent;
+  pointer-events: none;
+}
+.progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+@media (max-width: 900px) {
+  .shell {
+    margin-left: 0;
+    padding-top: 60px;
+  }
+  .progress {
+    left: 0;
+    top: 60px;
+  }
+}

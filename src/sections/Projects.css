@@ -1,0 +1,354 @@
+.proj {
+  padding: clamp(56px, 9vh, 104px) 0;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------------- marquee ---------------- */
+.mq {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.mq__pin {
+  flex-shrink: 0;
+  padding-right: 18px;
+  border-right: 1px solid var(--line-2);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+.mq__track {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 88%, transparent);
+}
+
+.mq__row {
+  display: flex;
+  width: max-content;
+  animation: mqScroll 34s linear infinite;
+}
+.mq:hover .mq__row {
+  animation-play-state: paused;
+}
+
+@keyframes mqScroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.mq__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 26px;
+  padding-right: 26px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.mq__item i {
+  color: var(--ink-4);
+  font-style: normal;
+}
+
+/* ---------------- showcase ---------------- */
+.show {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.show__main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+  min-height: 440px;
+  transition:
+    border-color 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
+}
+/* No transform here on purpose: these cards are tall enough that the
+   cursor is often still over one while the page scrolls past it. A
+   translateY on :hover would shift the card under a stationary cursor,
+   which re-triggers :hover, which shifts it again — a flicker loop.
+   Depth comes from border + shadow instead, which don't move the box. */
+.show__main:hover {
+  border-color: var(--line-2);
+  box-shadow: var(--shadow);
+}
+
+/* Even-indexed cards put the schematic on the left. */
+.show__main.is-flipped .show__body {
+  order: 2;
+}
+.show__main.is-flipped .show__visual {
+  order: 1;
+  border-left: none;
+  border-right: 1px solid var(--line);
+}
+
+.show__body {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 40px);
+}
+
+.show__kicker {
+  font-size: 10px;
+  color: var(--ink-3);
+}
+
+.show__title {
+  margin-top: 16px;
+  font-size: clamp(26px, 3.2vw, 42px);
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.show__tagline {
+  margin-top: 14px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.show__points {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+.show__points li {
+  position: relative;
+  padding-left: 17px;
+  font-size: 13.5px;
+  line-height: 1.58;
+  color: var(--ink-2);
+}
+.show__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+.show__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 22px;
+}
+.show__stack span {
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--ink-2);
+  transition:
+    border-color 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+.show__stack span:hover {
+  border-color: var(--line-accent);
+  color: var(--accent);
+}
+
+.show__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+}
+.show__meta i {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.show__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--accent);
+}
+.show__live b {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: railpulse 2.4s ease-out infinite;
+}
+
+/* visual half */
+.show__visual {
+  position: relative;
+  border-left: 1px solid var(--line);
+  overflow: hidden;
+}
+
+/* ---------------- extras ---------------- */
+.extras {
+  margin-top: 54px;
+}
+
+.extras__eyebrow {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 10.5px;
+  color: var(--ink-3);
+}
+
+.extras__toggleRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.extras__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+  transition:
+    border-color 0.3s var(--ease),
+    background 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+.extras__toggle:hover {
+  border-color: var(--line-accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.extras__toggle svg {
+  transition: transform 0.3s var(--ease);
+}
+.extras__toggle:hover svg {
+  transform: translateY(1px);
+}
+.extras__toggle[aria-expanded='true']:hover svg {
+  transform: translateY(-1px);
+}
+
+.extras__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.extra {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  animation: extraIn 0.55s var(--ease) backwards;
+  animation-delay: var(--d, 0ms);
+  transition:
+    border-color 0.35s var(--ease),
+    transform 0.35s var(--ease);
+}
+
+@keyframes extraIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+.extra:hover {
+  border-color: var(--line-2);
+  transform: translateY(-3px);
+}
+
+.extra__top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.extra__num {
+  font-size: 10.5px;
+  color: var(--accent);
+}
+.extra__kicker {
+  font-size: 9.5px;
+  color: var(--ink-4);
+}
+
+.extra__title {
+  margin-top: 14px;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+}
+
+.extra__body {
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.extra__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+.extra__stack span {
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--ink-3);
+}
+
+/* ---------------- responsive ---------------- */
+@media (max-width: 980px) {
+  .show__main,
+  .show__main.is-flipped {
+    grid-template-columns: 1fr;
+  }
+  /* Schematic always sits above the text once stacked. */
+  .show__main .show__visual,
+  .show__main.is-flipped .show__visual {
+    order: 1;
+    min-height: 280px;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .show__main .show__body,
+  .show__main.is-flipped .show__body {
+    order: 2;
+  }
+}
