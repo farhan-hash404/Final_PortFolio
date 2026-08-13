@@ -150,6 +150,12 @@ export const featuredProjects = [
       "A 2D fighting game whose opponent isn't scripted and isn't a pre-trained checkpoint — it runs PPO live in the browser, learning from you mid-fight.",
     stack: ['TypeScript', 'HTML5 Canvas', 'Vite', 'PPO', 'PyTorch', 'Gymnasium'],
     visual: 'ppo',
+    live: true,
+    actions: [
+      { label: 'Visit site', href: 'https://stickfighterio.netlify.app/', icon: 'external' },
+      { label: 'Live demo', href: 'https://stickfighterio.netlify.app/', icon: 'external' },
+      { label: 'GitHub', href: 'https://github.com/farhan-hash404/Stick-Fighter', icon: 'github' },
+    ],
     short: [
       'The opponent runs real PPO live in the browser — network, backprop and Adam all hand-rolled, 51 KB, no ML libraries.',
       'It learns from you mid-fight: 12/12 rounds won in 258 frames, up from 11/12 in 619 with the scripted prior stripped off.',

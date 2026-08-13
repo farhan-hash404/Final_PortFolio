@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { featuredProjects, marqueeTags, sideProjects } from '../data/content'
 import SectionHead from '../components/SectionHead'
 import ProjectVisual from '../components/ProjectVisual'
+import Button from '../components/Button'
 import Icon from '../components/Icon'
 import { useSpotlight } from '../hooks/usePointer'
 import './Projects.css'
@@ -112,6 +113,24 @@ function FeaturedCard({ p, flip }) {
             <span key={s}>{s}</span>
           ))}
         </div>
+
+        {p.actions && p.actions.length > 0 && (
+          <div className="show__actions">
+            {p.actions.map((act) => (
+              <Button
+                key={act.label}
+                href={act.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="quiet"
+                icon={act.icon || 'external'}
+                className="show__actionBtn"
+              >
+                {act.label}
+              </Button>
+            ))}
+          </div>
+        )}
 
         <div className="show__meta">
           <span>{p.meta}</span>
