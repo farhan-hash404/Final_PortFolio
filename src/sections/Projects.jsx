@@ -132,9 +132,29 @@ function FeaturedCard({ p, flip }) {
           </div>
         )}
 
+        {p.award && (
+          <p className="show__award">
+            <Icon name="trophy" size={14} />
+            {p.award}
+          </p>
+        )}
+
         <div className="show__meta">
           <span>{p.meta}</span>
           <i />
+          {p.repo && (
+            <a
+              className="show__repo"
+              href={p.repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="link"
+            >
+              <Icon name="github" size={14} />
+              Source
+              <Icon name="arrowUpRight" size={12} />
+            </a>
+          )}
           <span className={p.live ? 'show__live' : ''}>
             {p.live && <b />}
             {p.period}
@@ -166,6 +186,20 @@ function ExtraCard({ p, delay }) {
           <span key={s}>{s}</span>
         ))}
       </div>
+
+      {p.repo && (
+        <a
+          className="extra__repo"
+          href={p.repo}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor="link"
+        >
+          <Icon name="github" size={14} />
+          View source
+          <Icon name="arrowUpRight" size={12} />
+        </a>
+      )}
     </article>
   )
 }

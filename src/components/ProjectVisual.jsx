@@ -227,6 +227,103 @@ function FactoryVisual() {
 }
 
 /* ------------------------------------------------------------------ */
+/* 03 — Dev Signal: mine forums → 2-pass Gemini → scored ideas + PRDs   */
+/* ------------------------------------------------------------------ */
+function SignalVisual() {
+  const outputs = ['Pain points', 'Product ideas', 'PRD docs', 'Trends']
+  const scores = [
+    { l: 'SEVERITY', v: 0.82 },
+    { l: 'FREQUENCY', v: 0.66 },
+    { l: 'MARKET OPPORTUNITY', v: 0.74 },
+    { l: 'SENTIMENT', v: 0.58 },
+  ]
+
+  return (
+    <Frame
+      w={560}
+      h={400}
+      label="Dev Signal pipeline: async scrapers over developer forums feeding a two-pass Gemini synthesis that produces scored pain points, product ideas and PRDs"
+      caption="discovery-pipeline"
+      foot={['async scrapers', '2-pass Gemini', 'PRD per idea']}
+    >
+      <text x="22" y="26" className="pv__cap">
+        MINE → SYNTHESISE → SPEC
+      </text>
+
+      {/* rails */}
+      <Wire d="M154 67 H 176 V 100 H 196" />
+      <Wire d="M154 125 H 176 V 100" />
+      <Wire d="M272 124 V 146" />
+      <Wire d="M272 194 V 216" />
+      <Wire d="M348 237 H 372 V 91" />
+
+      {/* sources */}
+      <Node x="22" y="46" w="132" h="42" title="Reddit" sub="r/webdev · r/SaaS" />
+      <Node x="22" y="104" w="132" h="42" title="Stack Overflow" sub="API search" />
+
+      {/* two-pass synthesis */}
+      <Node x="196" y="76" w="152" h="48" title="Gemini Pass 1" sub="extract pain points" hot />
+      <Node x="196" y="146" w="152" h="48" title="Gemini Pass 2" sub="ideas + PRD" hot />
+      <Node x="196" y="216" w="152" h="42" title="Postgres" sub="persisted" />
+
+      {/* surfaced outputs */}
+      <text x="392" y="60" className="pv__cap">
+        SURFACED AS
+      </text>
+      {outputs.map((o, i) => {
+        const y = 76 + i * 38
+        return (
+          <g key={o}>
+            <Flow d={`M372 ${y + 15} H 392`} delay={i * 0.12} />
+            <Chip x={392} y={y} w={146} h={30} label={o} hot={i === 0} />
+          </g>
+        )
+      })}
+
+      {/* scoring */}
+      <text x="22" y="252" className="pv__cap">
+        EVERY PAIN POINT SCORED
+      </text>
+      {scores.map((s, i) => (
+        <g key={s.l} transform={`translate(22 ${264 + i * 22})`}>
+          <text x="0" y="9" className="pv__s">
+            {s.l}
+          </text>
+          <rect x="152" y="2" width="180" height="7" rx="3.5" fill="rgba(255,255,255,.07)" />
+          <rect
+            x="152"
+            y="2"
+            height="7"
+            rx="3.5"
+            fill="#d9f227"
+            className="pv__bar"
+            style={{ '--w': `${180 * s.v}px`, animationDelay: `${i * 0.16}s` }}
+          />
+          <text x="342" y="9" className="pv__s">
+            {s.v.toFixed(2)}
+          </text>
+        </g>
+      ))}
+
+      <text x="392" y="272" className="pv__s">
+        4–6 PAIN POINTS
+      </text>
+      <text x="392" y="290" className="pv__s">
+        3–5 IDEAS PER RUN
+      </text>
+      <text x="392" y="316" className="pv__s">
+        FULL PRD WRITTEN
+      </text>
+      <text x="392" y="334" className="pv__s">
+        FOR EACH IDEA
+      </text>
+
+      <Packet track="M154 67 H 176 V 100 H 272 V 258 H 372 V 91" />
+    </Frame>
+  )
+}
+
+/* ------------------------------------------------------------------ */
 /* 02 — AI court: debate loop + judge scoring                          */
 /* ------------------------------------------------------------------ */
 function CourtVisual() {
@@ -608,6 +705,7 @@ function ChurnVisual() {
 const registry = {
   factory: FactoryVisual,
   court: CourtVisual,
+  signal: SignalVisual,
   scan: ScanVisual,
   ppo: PPOVisual,
   churn: ChurnVisual,

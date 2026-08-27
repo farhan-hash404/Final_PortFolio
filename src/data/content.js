@@ -34,10 +34,10 @@ export const sections = [
 export const hero = {
   badge: {
     icon: 'trophy',
-    text: 'Selected for the',
-    highlight: 'AI / Agentic AI Capstone Program',
-    tail: 'at GIKI',
-    action: { label: 'View', href: '#experience' },
+    text: 'Adalat AI —',
+    highlight: 'Top 5, GIKI Capstone Competition',
+    tail: '· Advanced AI / Agentic Bootcamp',
+    action: { label: 'View', href: '#projects' },
   },
   // The name is the headline now; the tagline sits under it as support.
   tagline: ['I design and deploy', 'multi-agent AI systems', '— from prototype to production.'],
@@ -55,13 +55,13 @@ export const hero = {
   ],
   stats: [
     { value: '1+', label: 'Years hands-on' },
-    { value: '7', label: 'Projects built' },
+    { value: '6', label: 'Projects built' },
   ],
   proof: [
     { icon: 'spark', text: 'Multi-agent systems' },
     { icon: 'medal', text: 'NVIDIA certified' },
-    { icon: 'rocket', text: '7 projects built' },
-    { icon: 'trophy', text: 'GIKI Capstone 2026' },
+    { icon: 'rocket', text: '6 projects built' },
+    { icon: 'trophy', text: 'Top 5 · GIKI Capstone' },
   ],
   focusCard: {
     title: 'Where I go deep',
@@ -128,6 +128,8 @@ export const featuredProjects = [
     stack: ['Python', 'LLMs', 'Multi-Agent', 'FastAPI'],
     visual: 'court',
     live: true,
+    repo: 'https://github.com/farhan-hash404/MootCourtSimulator',
+    award: 'Top 5 — GIKI Capstone Competition',
     short: [
       'Argue a live case against an AI opposing counsel that raises real legal issues and challenges weak reasoning.',
       'An AI judge scores legal reasoning, evidence use and rebuttal handling against a fixed rubric, returning a score with feedback.',
@@ -140,8 +142,32 @@ export const featuredProjects = [
     ],
   },
   {
-    id: 'stick-fighter',
+    id: 'dev-signal',
     index: '03',
+    title: 'Dev Signal',
+    kicker: 'LLM PIPELINE · SAAS · MARKET RESEARCH',
+    meta: 'Full-Stack AI Platform',
+    period: '2026',
+    repo: 'https://github.com/farhan-hash404/Dev-Signal-',
+    tagline:
+      'Mines developer forums for real complaints, then turns the recurring ones into scored pain points, product ideas, and full PRDs.',
+    stack: ['Next.js', 'TypeScript', 'FastAPI', 'Gemini', 'PostgreSQL', 'Celery', 'Redis'],
+    visual: 'signal',
+    short: [
+      'Async scrapers pull discussions from developer subreddits and Stack Overflow, then a two-pass Gemini pipeline turns them into scored pain points.',
+      'A second pass generates SaaS product ideas and writes full PRDs — features, metrics, tech stack and competitors.',
+    ],
+    highlights: [
+      'Built an automated discovery pipeline that replaces manual forum trawling: async HTTPX scrapers pull top discussions across targeted subreddits (r/webdev, r/SaaS, r/programming) and the Stack Overflow API.',
+      'Designed a two-pass Gemini pipeline — pass one extracts concrete pain points with severity, sentiment and frequency; pass two turns the validated ones into targeted SaaS product ideas.',
+      'Generated full Product Requirement Documents per idea, covering overview, problem statement, success metrics, tiered features, tech architecture, user stories and competitor analysis.',
+      'Modelled the domain in SQLAlchemy 2.0 with UUID keys across analyses, pain points, ideas, PRDs, trends and competitors, backed by Postgres with Alembic migrations.',
+      'Served it behind FastAPI with Celery and Redis handling long scrape jobs, and a Next.js 16 dashboard with client-side fallbacks so the UI stays up even when the backend is unreachable.',
+    ],
+  },
+  {
+    id: 'stick-fighter',
+    index: '04',
     title: 'Stick Fighter',
     kicker: 'REINFORCEMENT LEARNING · PPO · TYPESCRIPT',
     meta: 'Personal Project',
@@ -174,35 +200,21 @@ export const featuredProjects = [
 export const sideProjects = [
   {
     id: 'kidney-cnn',
-    index: '04',
+    index: '05',
     title: 'Kidney Disease Classification',
     kicker: 'DEEP LEARNING · COMPUTER VISION',
+    repo: 'https://github.com/farhan-hash404/Kidney-Disease-Classification',
     body: 'A CNN trained to classify kidney disease from medical scan images — the full pipeline from preprocessing and augmentation through to evaluation, tuned to reduce false negatives on clinical-style data.',
     stack: ['Python', 'TensorFlow', 'Keras', 'CNN'],
   },
   {
-    id: 'churn',
-    index: '05',
-    title: 'Customer Churn Prediction',
-    kicker: 'MACHINE LEARNING · PREDICTIVE MODELLING',
-    body: 'A model predicting customer churn from behavioural, transactional, and demographic signals, evaluated on accuracy, precision, recall, and ROC-AUC to enable proactive retention targeting.',
-    stack: ['Python', 'Scikit-learn', 'Pandas', 'FastAPI'],
-  },
-  {
-    id: 'phishing',
+    id: 'wine-quality',
     index: '06',
-    title: 'URL Phishing Detector',
-    kicker: 'CLASSIFICATION',
-    body: 'A classification model that identifies malicious URLs from lexical and structural features, applying feature engineering to separate phishing from legitimate links.',
-    stack: ['Python', 'Scikit-learn', 'Feature Engineering'],
-  },
-  {
-    id: 'house-price',
-    index: '07',
-    title: 'House Price Prediction',
-    kicker: 'REGRESSION',
-    body: 'A regression model for property price estimation with outlier handling, feature scaling, and RMSE / R²-based evaluation.',
-    stack: ['Python', 'Pandas', 'Scikit-learn'],
+    title: 'Wine Quality Analysis',
+    kicker: 'MACHINE LEARNING · DATA ANALYSIS',
+    repo: 'https://github.com/farhan-hash404/Wine-Quality-Analysis',
+    body: 'Exploratory analysis and predictive modelling over physicochemical wine measurements — feature correlation, distribution analysis, and classification of quality scores with comparative model evaluation.',
+    stack: ['Python', 'Pandas', 'Scikit-learn', 'Matplotlib'],
   },
 ]
 
