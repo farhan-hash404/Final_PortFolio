@@ -36,12 +36,11 @@ export default function Intro() {
       <a
         className="intro__badge reveal"
         href={hero.badge.action.href}
-        onClick={(e) => {
-          e.preventDefault()
-          document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })
-        }}
+        target={hero.badge.action.target || '_blank'}
+        rel="noopener noreferrer"
         style={{ '--reveal-delay': '60ms' }}
         data-cursor="link"
+        title="View Certificate of Honorable Mention"
       >
         <Icon name="trophy" size={15} className="intro__badgeIcon" />
         <span>

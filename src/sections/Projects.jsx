@@ -133,10 +133,25 @@ function FeaturedCard({ p, flip }) {
         )}
 
         {p.award && (
-          <p className="show__award">
-            <Icon name="trophy" size={14} />
-            {p.award}
-          </p>
+          p.awardProof ? (
+            <a
+              href={p.awardProof}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="show__award show__award--link"
+              data-cursor="link"
+              title="View Certificate of Honorable Mention"
+            >
+              <Icon name="trophy" size={14} />
+              <span>{p.award}</span>
+              <Icon name="arrowUpRight" size={12} />
+            </a>
+          ) : (
+            <p className="show__award">
+              <Icon name="trophy" size={14} />
+              {p.award}
+            </p>
+          )
         )}
 
         <div className="show__meta">

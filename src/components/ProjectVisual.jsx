@@ -338,7 +338,7 @@ function CourtVisual() {
     <Frame
       w={560}
       h={400}
-      label="Adalat AI moot court simulation: lawyer debating an AI opposing counsel while an AI judge scores against evaluation criteria"
+      label="MootCourtSimulator moot court simulation: lawyer debating an AI opposing counsel while an AI judge scores against evaluation criteria"
       caption="moot-court-sim"
       foot={['AI counsel + judge', 'live rebuttals', 'scored feedback']}
     >

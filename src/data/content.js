@@ -34,10 +34,14 @@ export const sections = [
 export const hero = {
   badge: {
     icon: 'trophy',
-    text: 'Adalat AI —',
-    highlight: 'Top 5, GIKI Capstone Competition',
-    tail: '· Advanced AI / Agentic Bootcamp',
-    action: { label: 'View', href: '#projects' },
+    text: 'MootCourtSimulator —',
+    highlight: 'Selected among Top 5',
+    tail: '· GIKI Capstone Competition (out of 35 projects)',
+    action: {
+      label: 'View',
+      href: '/certificates/certificate-of-honorable-mention.jpg',
+      target: '_blank',
+    },
   },
   // The name is the headline now; the tagline sits under it as support.
   tagline: ['I design and deploy', 'multi-agent AI systems', '— from prototype to production.'],
@@ -61,7 +65,7 @@ export const hero = {
     { icon: 'spark', text: 'Multi-agent systems' },
     { icon: 'medal', text: 'NVIDIA certified' },
     { icon: 'rocket', text: '6 projects built' },
-    { icon: 'trophy', text: 'Top 5 · GIKI Capstone' },
+    { icon: 'trophy', text: 'Top 5 · MootCourtSimulator' },
   ],
   focusCard: {
     title: 'Where I go deep',
@@ -117,9 +121,9 @@ export const featuredProjects = [
     ],
   },
   {
-    id: 'adalat',
+    id: 'mootcourt-simulator',
     index: '02',
-    title: 'Adalat AI',
+    title: 'MootCourtSimulator',
     kicker: 'LEGAL AI · MOOT COURT SIM · CAPSTONE',
     meta: 'Capstone Project · GIKI',
     period: '2026 – Present',
@@ -129,7 +133,8 @@ export const featuredProjects = [
     visual: 'court',
     live: true,
     repo: 'https://github.com/farhan-hash404/MootCourtSimulator',
-    award: 'Top 5 — GIKI Capstone Competition',
+    award: 'Top 5 — GIKI Capstone Competition (out of 35 projects)',
+    awardProof: '/certificates/certificate-of-honorable-mention.jpg',
     short: [
       'Argue a live case against an AI opposing counsel that raises real legal issues and challenges weak reasoning.',
       'An AI judge scores legal reasoning, evidence use and rebuttal handling against a fixed rubric, returning a score with feedback.',
@@ -244,7 +249,7 @@ export const timeline = [
     period: '2026 — Present',
     current: true,
     bullets: [
-      'Building an AI-powered moot court platform where law students argue cases in real time against an opposing-counsel LLM agent.',
+      'Building an AI-powered moot court platform (MootCourtSimulator) where law students argue cases in real time against an opposing-counsel LLM agent.',
       'Developing an autonomous AI judge agent that scores argument quality, legal reasoning, and rebuttal strength with structured feedback.',
       'Architecting the multi-agent conversation flow and evaluation rubric to keep debate turns contextual and consistently graded.',
     ],
@@ -339,20 +344,36 @@ export const stack = [
 
 export const certifications = [
   {
+    title: 'Top 5 — MootCourtSimulator (Honorable Mention)',
+    issuer: 'GIK Institute & Asher Aziz Foundation · Aug 2026',
+    tag: 'Honorable Mention · Top 5 of 35',
+    accent: true,
+    proof: '/certificates/certificate-of-honorable-mention.jpg',
+    proofLabel: 'View Proof',
+  },
+  {
+    title: 'Advanced AI Bootcamp (Grade B+)',
+    issuer: 'GIK Institute & Asher Aziz Foundation · Aug 2026',
+    tag: 'Certificate of Completion',
+    accent: true,
+    proof: '/certificates/gik-advanced-ai-bootcamp-completion.jpg',
+    proofLabel: 'View Proof',
+  },
+  {
     title: 'Fundamentals of Deep Learning',
-    issuer: 'NVIDIA · Coursera',
+    issuer: 'NVIDIA · Whizlabs (Coursera) · Jun 2026',
     tag: 'Deep Learning',
+    proof: '/certificates/nvidia-fundamentals-of-deep-learning.pdf',
+    verifyUrl: 'https://coursera.org/verify/XHB4QTIBGXXX',
+    proofLabel: 'View Certificate',
   },
   {
     title: 'Fundamentals of Machine Learning',
-    issuer: 'NVIDIA · Coursera',
+    issuer: 'NVIDIA · Whizlabs (Coursera) · Jun 2026',
     tag: 'Machine Learning',
-  },
-  {
-    title: 'AI / Agentic AI Capstone Program',
-    issuer: 'GIKI — Ghulam Ishaq Khan Institute · 2026',
-    tag: 'Agentic AI',
-    accent: true,
+    proof: '/certificates/nvidia-fundamentals-of-machine-learning.pdf',
+    verifyUrl: 'https://coursera.org/verify/I5ZRELZMVZYV',
+    proofLabel: 'View Certificate',
   },
   {
     title: 'MERN Stack Development',
