@@ -59,12 +59,12 @@ export const hero = {
   ],
   stats: [
     { value: '1+', label: 'Years hands-on' },
-    { value: '6', label: 'Projects built' },
+    { value: '10+', label: 'Projects built' },
   ],
   proof: [
     { icon: 'spark', text: 'Multi-agent systems' },
-    { icon: 'medal', text: 'NVIDIA certified' },
-    { icon: 'rocket', text: '6 projects built' },
+    { icon: 'medal', text: 'IBM certified' },
+    { icon: 'rocket', text: '10+ projects built' },
     { icon: 'trophy', text: 'Top 5 · MootCourtSimulator' },
   ],
   focusCard: {

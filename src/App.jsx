@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Cursor from './components/Cursor'
 import Rail from './components/Rail'
 import Palette from './components/Palette'
+import EmailModal from './components/EmailModal'
 
 import Intro from './sections/Intro'
 import Projects from './sections/Projects'
@@ -25,11 +26,19 @@ export default function App() {
   const finePointer = useFinePointer()
 
   const [paletteOpen, setPaletteOpen] = useState(false)
+  const [emailModalOpen, setEmailModalOpen] = useState(false)
   const [navOpen, setNavOpen] = useState(false)
   const [progress, setProgress] = useState(0)
 
   useReveal()
   useScrollingClass()
+
+  // Listen for global request to open email modal
+  useEffect(() => {
+    const handleOpen = () => setEmailModalOpen(true)
+    window.addEventListener('open-email-modal', handleOpen)
+    return () => window.removeEventListener('open-email-modal', handleOpen)
+  }, [])
 
   // ⌘K / Ctrl-K anywhere on the page
   useEffect(() => {
@@ -90,16 +99,21 @@ export default function App() {
 
       <main id="main" className="shell">
         <div className="shell__inner">
-          <Intro />
+          <Intro onOpenEmail={() => setEmailModalOpen(true)} />
           <Projects />
           <Experience />
           <Stack />
           <Credentials />
-          <Contact />
+          <Contact onOpenEmail={() => setEmailModalOpen(true)} />
         </div>
       </main>
 
-      <Palette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+      <Palette
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        onOpenEmail={() => setEmailModalOpen(true)}
+      />
+      <EmailModal open={emailModalOpen} onClose={() => setEmailModalOpen(false)} />
     </>
   )
 }

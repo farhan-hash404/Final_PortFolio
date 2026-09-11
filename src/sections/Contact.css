@@ -64,6 +64,14 @@
   transform: translateY(-2px);
 }
 
+button.ct__link {
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+}
+
 .ct__linkIcon {
   display: grid;
   place-items: center;

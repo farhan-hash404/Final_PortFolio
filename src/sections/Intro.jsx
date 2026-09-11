@@ -4,8 +4,16 @@ import Icon from '../components/Icon'
 import { useSpotlight } from '../hooks/usePointer'
 import './Intro.css'
 
-export default function Intro() {
+export default function Intro({ onOpenEmail }) {
   const spot = useSpotlight()
+
+  const handleEmailClick = () => {
+    if (onOpenEmail) {
+      onOpenEmail()
+    } else {
+      window.dispatchEvent(new CustomEvent('open-email-modal'))
+    }
+  }
 
   return (
     <section id="intro" className="intro">
@@ -127,7 +135,11 @@ export default function Intro() {
           >
             View work
           </Button>
-          <Button variant="ghost" href={`mailto:${profile.email}`}>
+          <Button
+            variant="ghost"
+            as="button"
+            onClick={handleEmailClick}
+          >
             Get in touch
           </Button>
         </div>

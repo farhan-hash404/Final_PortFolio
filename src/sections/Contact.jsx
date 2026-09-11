@@ -5,9 +5,17 @@ import Button from '../components/Button'
 import { useSpotlight } from '../hooks/usePointer'
 import './Contact.css'
 
-export default function Contact() {
+export default function Contact({ onOpenEmail }) {
   const spot = useSpotlight()
   const [copied, setCopied] = useState(false)
+
+  const handleEmailClick = () => {
+    if (onOpenEmail) {
+      onOpenEmail()
+    } else {
+      window.dispatchEvent(new CustomEvent('open-email-modal'))
+    }
+  }
 
   const copyEmail = async () => {
     try {
@@ -15,8 +23,7 @@ export default function Contact() {
       setCopied(true)
       setTimeout(() => setCopied(false), 1800)
     } catch {
-      // Clipboard blocked (insecure context or denied) — the mailto link
-      // beside this button still works, so just leave the label alone.
+      // Clipboard blocked (insecure context or denied)
     }
   }
 
@@ -36,7 +43,12 @@ export default function Contact() {
         <p className="ct__blurb">{careerFocus}</p>
 
         <div className="ct__actions">
-          <Button variant="solid" icon="arrowUpRight" href={`mailto:${profile.email}`}>
+          <Button
+            variant="solid"
+            icon="arrowUpRight"
+            as="button"
+            onClick={handleEmailClick}
+          >
             Email me
           </Button>
           <Button as="button" variant="quiet" icon={copied ? 'check' : 'copy'} onClick={copyEmail}>
@@ -48,25 +60,47 @@ export default function Contact() {
         </div>
 
         <div className="ct__links">
-          {contactLinks.map((l) => (
-            <a
-              className="ct__link"
-              key={l.id}
-              href={l.href}
-              target={l.external ? '_blank' : undefined}
-              rel={l.external ? 'noopener noreferrer' : undefined}
-              data-cursor="link"
-            >
-              <span className="ct__linkIcon">
-                <Icon name={l.icon} size={16} />
-              </span>
-              <span className="ct__linkText">
-                <span className="ct__linkLabel mono">{l.label}</span>
-                <span className="ct__linkValue">{l.value}</span>
-              </span>
-              <Icon name={l.external ? 'arrowUpRight' : 'arrowRight'} size={15} />
-            </a>
-          ))}
+          {contactLinks.map((l) => {
+            if (l.id === 'email') {
+              return (
+                <button
+                  type="button"
+                  className="ct__link ct__linkBtn"
+                  key={l.id}
+                  onClick={handleEmailClick}
+                  data-cursor="link"
+                >
+                  <span className="ct__linkIcon">
+                    <Icon name={l.icon} size={16} />
+                  </span>
+                  <span className="ct__linkText">
+                    <span className="ct__linkLabel mono">{l.label}</span>
+                    <span className="ct__linkValue">{l.value}</span>
+                  </span>
+                  <Icon name="arrowUpRight" size={15} />
+                </button>
+              )
+            }
+            return (
+              <a
+                className="ct__link"
+                key={l.id}
+                href={l.href}
+                target={l.external ? '_blank' : undefined}
+                rel={l.external ? 'noopener noreferrer' : undefined}
+                data-cursor="link"
+              >
+                <span className="ct__linkIcon">
+                  <Icon name={l.icon} size={16} />
+                </span>
+                <span className="ct__linkText">
+                  <span className="ct__linkLabel mono">{l.label}</span>
+                  <span className="ct__linkValue">{l.value}</span>
+                </span>
+                <Icon name={l.external ? 'arrowUpRight' : 'arrowRight'} size={15} />
+              </a>
+            )
+          })}
         </div>
 
         <p className="ct__avail">

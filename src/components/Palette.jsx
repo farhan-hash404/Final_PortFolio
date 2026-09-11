@@ -4,11 +4,20 @@ import Icon from './Icon'
 import './Palette.css'
 
 /** ⌘K / Ctrl-K jump menu — sections plus the outbound links. */
-export default function Palette({ open, onClose }) {
+export default function Palette({ open, onClose, onOpenEmail }) {
   const [q, setQ] = useState('')
   const [cursor, setCursor] = useState(0)
   const inputRef = useRef(null)
   const listRef = useRef(null)
+
+  const handleOpenEmail = () => {
+    onClose()
+    if (onOpenEmail) {
+      onOpenEmail()
+    } else {
+      window.dispatchEvent(new CustomEvent('open-email-modal'))
+    }
+  }
 
   const commands = useMemo(() => {
     const nav = sections.map((s) => ({
@@ -26,11 +35,17 @@ export default function Palette({ open, onClose }) {
       label: l.label,
       hint: l.value,
       icon: l.icon,
-      run: () => window.open(l.href, l.external ? '_blank' : '_self', 'noopener,noreferrer'),
+      run: () => {
+        if (l.id === 'email') {
+          handleOpenEmail()
+          return
+        }
+        window.open(l.href, l.external ? '_blank' : '_self', 'noopener,noreferrer')
+      },
     }))
 
     return [...nav, ...links]
-  }, [])
+  }, [onOpenEmail])
 
   const results = useMemo(() => {
     const needle = q.trim().toLowerCase()
