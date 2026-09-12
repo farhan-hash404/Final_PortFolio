@@ -6,78 +6,200 @@
 .stack__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 30px;
 }
 
-.stack__cell {
-  padding: 26px 28px;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  transition: background 0.35s var(--ease);
+.stack__card {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  transition:
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
 }
-.stack__cell:hover {
+
+.stack__card:hover {
+  border-color: var(--line-accent);
+  box-shadow: 0 16px 44px -16px rgba(0, 0, 0, 0.7), 0 0 28px -10px var(--accent-glow);
+}
+
+.stack__cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* strip the outer edges so the card border isn't doubled */
-.stack__cell:nth-child(2n) {
-  border-right: none;
-}
-.stack__cell:nth-last-child(-n + 2) {
-  border-bottom: none;
+.stack__dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.stack__group {
-  font-size: 11px;
+.stack__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.stack__dot.is-active {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.stack__cardTag {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
   color: var(--accent);
+  opacity: 0.9;
 }
 
 .stack__items {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  margin-top: 16px;
+  flex-direction: column;
+  padding: 6px 0;
 }
 
-.stack__item {
-  position: relative;
-  font-size: 14.5px;
+.stack__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 20px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
+  transition: background 0.2s var(--ease);
+}
+
+.stack__row:last-child {
+  border-bottom: none;
+}
+
+.stack__row:hover {
+  background: rgba(255, 255, 255, 0.028);
+}
+
+.stack__name {
+  font-family: var(--font-body);
+  font-size: 13.5px;
   font-weight: 500;
-  color: var(--ink-2);
-  transition: color 0.25s var(--ease);
-  cursor: default;
-}
-.stack__item::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 0;
-  height: 1px;
-  background: var(--accent);
-  transition: width 0.3s var(--ease);
-}
-.stack__item:hover {
   color: var(--ink);
-}
-.stack__item:hover::after {
-  width: 100%;
+  transition: color 0.2s var(--ease);
+  line-height: 1.4;
 }
 
-@media (max-width: 700px) {
+.stack__row:hover .stack__name {
+  color: #ffffff;
+}
+
+.stack__status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.stack__level {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  min-width: 96px;
+  text-align: right;
+  transition: color 0.2s var(--ease);
+}
+
+.stack__row:hover .stack__level {
+  color: var(--accent);
+}
+
+/* 10-segment glowing progress bar matching the reference terminal */
+.stack__meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5px;
+  padding: 2.5px 3.5px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 3.5px;
+  height: 16px;
+  box-sizing: border-box;
+}
+
+.stack__segment {
+  width: 3.5px;
+  height: 10px;
+  border-radius: 0.8px;
+  background: rgba(255, 255, 255, 0.06);
+  transition:
+    background 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+
+.stack__segment.is-filled {
+  background: var(--accent);
+  box-shadow: 0 0 5px var(--accent-glow);
+}
+
+.stack__row:hover .stack__segment.is-filled {
+  background: #eaff47;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+@media (max-width: 900px) {
   .stack__grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
-  .stack__cell,
-  .stack__cell:nth-child(2n) {
-    border-right: none;
+}
+
+@media (max-width: 540px) {
+  .stack__cardHeader {
+    padding: 11px 14px;
   }
-  .stack__cell {
-    border-bottom: 1px solid var(--line);
+
+  .stack__row {
+    padding: 10px 14px;
+    gap: 10px;
   }
-  .stack__cell:last-child {
-    border-bottom: none;
+
+  .stack__name {
+    font-size: 12.5px;
   }
-  .stack__cell:nth-last-child(2) {
-    border-bottom: 1px solid var(--line);
+
+  .stack__status {
+    gap: 8px;
+  }
+
+  .stack__level {
+    font-size: 9px;
+    min-width: 75px;
+    letter-spacing: 0.06em;
+  }
+
+  .stack__meter {
+    padding: 2px;
+    gap: 1.5px;
+    height: 14px;
+  }
+
+  .stack__segment {
+    width: 2.8px;
+    height: 9px;
+  }
+}
+
+@media (max-width: 380px) {
+  .stack__level {
+    display: none;
   }
 }

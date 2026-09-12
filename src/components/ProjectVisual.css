@@ -67,21 +67,78 @@
 
 .pv__foot {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   flex-wrap: wrap;
-  gap: 8px 10px;
   flex-shrink: 0;
-  padding: 12px 16px;
+  padding: 12px 18px;
   border-top: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.28);
 }
-.pv__foot span {
+
+.pv__footTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  align-items: center;
+}
+
+.pv__footTags span {
   padding: 3px 9px;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--line);
   border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.06em;
   color: var(--ink-3);
+}
+
+/* High-visibility GitHub action directly inside the schema container */
+.pv__githubBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  margin-left: auto;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #080a05;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 16px var(--accent-glow);
+  transition:
+    background 0.25s var(--ease),
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    color 0.25s var(--ease);
+  cursor: pointer;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.pv__githubBtn:hover {
+  background: #f1ff5c;
+  color: #000;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 20px var(--accent-glow), 0 0 24px rgba(217, 242, 39, 0.55);
+}
+
+.pv__githubBtn svg {
+  flex-shrink: 0;
+}
+
+.pv__githubBtn svg:last-child {
+  transition: transform 0.25s var(--ease);
+}
+
+.pv__githubBtn:hover svg:last-child {
+  transform: translate(2px, -2px);
 }
 
 .pv__t {

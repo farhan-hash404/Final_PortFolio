@@ -1,4 +1,8 @@
+import { createContext, useContext } from 'react'
+import Icon from './Icon'
 import './ProjectVisual.css'
+
+const RepoContext = createContext(null)
 
 /**
  * Each project gets a schematic of how it actually works rather than a
@@ -6,42 +10,64 @@ import './ProjectVisual.css'
  * curve, a churn split. Pure SVG, no assets to ship.
  */
 
-const Frame = ({ children, label, caption = '', foot = [], w = 520, h = 340 }) => (
-  <div className="pv">
-    <div className="pv__chrome">
-      <span className="pv__dots">
-        <i />
-        <i />
-        <i />
-      </span>
-      <span className="pv__chromeLabel">{caption}</span>
-    </div>
+const Frame = ({ children, label, caption = '', foot = [], repo: repoProp, w = 520, h = 340 }) => {
+  const contextRepo = useContext(RepoContext)
+  const repo = repoProp || contextRepo
 
-    <svg viewBox={`0 0 ${w} ${h}`} className="pv__svg" role="img" aria-label={label}>
-      <defs>
-        <pattern id="pvGrid" width="26" height="26" patternUnits="userSpaceOnUse">
-          <path d="M26 0H0v26" fill="none" stroke="rgba(255,255,255,.045)" strokeWidth="1" />
-        </pattern>
-        <linearGradient id="pvFade" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#d9f227" stopOpacity=".28" />
-          <stop offset="100%" stopColor="#d9f227" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id="pvLine" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#b6cc16" />
-          <stop offset="100%" stopColor="#d9f227" />
-        </linearGradient>
-      </defs>
-      <rect width={w} height={h} fill="url(#pvGrid)" />
-      {children}
-    </svg>
+  return (
+    <div className="pv">
+      <div className="pv__chrome">
+        <span className="pv__dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className="pv__chromeLabel">{caption}</span>
+      </div>
 
-    <div className="pv__foot">
-      {foot.map((f) => (
-        <span key={f}>{f}</span>
-      ))}
+      <svg viewBox={`0 0 ${w} ${h}`} className="pv__svg" role="img" aria-label={label}>
+        <defs>
+          <pattern id="pvGrid" width="26" height="26" patternUnits="userSpaceOnUse">
+            <path d="M26 0H0v26" fill="none" stroke="rgba(255,255,255,.045)" strokeWidth="1" />
+          </pattern>
+          <linearGradient id="pvFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#d9f227" stopOpacity=".28" />
+            <stop offset="100%" stopColor="#d9f227" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="pvLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#b6cc16" />
+            <stop offset="100%" stopColor="#d9f227" />
+          </linearGradient>
+        </defs>
+        <rect width={w} height={h} fill="url(#pvGrid)" />
+        {children}
+      </svg>
+
+      <div className="pv__foot">
+        <div className="pv__footTags">
+          {foot.map((f) => (
+            <span key={f}>{f}</span>
+          ))}
+        </div>
+
+        {repo && (
+          <a
+            className="pv__githubBtn"
+            href={repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="link"
+            aria-label="View on GitHub"
+          >
+            <Icon name="github" size={15} />
+            <span>GitHub</span>
+            <Icon name="arrowUpRight" size={13} />
+          </a>
+        )}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 /**
  * Text is centred against the box height so nodes of any height read right.
@@ -711,7 +737,11 @@ const registry = {
   churn: ChurnVisual,
 }
 
-export default function ProjectVisual({ kind }) {
+export default function ProjectVisual({ kind, repo }) {
   const V = registry[kind] || FactoryVisual
-  return <V />
+  return (
+    <RepoContext.Provider value={repo}>
+      <V repo={repo} />
+    </RepoContext.Provider>
+  )
 }

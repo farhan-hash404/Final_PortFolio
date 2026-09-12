@@ -157,19 +157,6 @@ function FeaturedCard({ p, flip }) {
         <div className="show__meta">
           <span>{p.meta}</span>
           <i />
-          {p.repo && (
-            <a
-              className="show__repo"
-              href={p.repo}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cursor="link"
-            >
-              <Icon name="github" size={14} />
-              Source
-              <Icon name="arrowUpRight" size={12} />
-            </a>
-          )}
           <span className={p.live ? 'show__live' : ''}>
             {p.live && <b />}
             {p.period}
@@ -178,7 +165,10 @@ function FeaturedCard({ p, flip }) {
       </div>
 
       <div className="show__visual" data-cursor="view" data-cursor-label="SCHEMA">
-        <ProjectVisual kind={p.visual} />
+        <ProjectVisual
+          kind={p.visual}
+          repo={p.repo || p.actions?.find((a) => a.icon === 'github' || a.label?.toLowerCase()?.includes('github'))?.href}
+        />
       </div>
     </article>
   )
@@ -211,7 +201,7 @@ function ExtraCard({ p, delay }) {
           data-cursor="link"
         >
           <Icon name="github" size={14} />
-          View source
+          GitHub
           <Icon name="arrowUpRight" size={12} />
         </a>
       )}
