@@ -122,7 +122,7 @@ function FeaturedCard({ p, flip }) {
                 href={act.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                variant="quiet"
+                variant={act.variant || 'solid'}
                 icon={act.icon || 'external'}
                 className="show__actionBtn"
               >

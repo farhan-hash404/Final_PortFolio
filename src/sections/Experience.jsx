@@ -1,5 +1,6 @@
 import { experienceIntro, highlightCards, timeline } from '../data/content'
 import SectionHead from '../components/SectionHead'
+import Icon from '../components/Icon'
 import { useSpotlight } from '../hooks/usePointer'
 import './Experience.css'
 
@@ -46,6 +47,39 @@ export default function Experience() {
                   <li key={b}>{b}</li>
                 ))}
               </ul>
+
+              {(t.proof || t.repo) && (
+                <div className="tl__action">
+                  {t.proof && (
+                    <a
+                      href={t.proof}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="tl__proofLink mono"
+                      data-cursor="link"
+                      title={`View certificate for ${t.role}`}
+                    >
+                      <Icon name="medal" size={13} />
+                      <span>View Certificate</span>
+                      <Icon name="arrowUpRight" size={11} />
+                    </a>
+                  )}
+                  {t.repo && (
+                    <a
+                      href={t.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="tl__proofLink mono"
+                      data-cursor="link"
+                      title={`View repository on GitHub`}
+                    >
+                      <Icon name="github" size={13} />
+                      <span>GitHub</span>
+                      <Icon name="arrowUpRight" size={11} />
+                    </a>
+                  )}
+                </div>
+              )}
             </article>
           </li>
         ))}

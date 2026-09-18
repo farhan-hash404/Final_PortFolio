@@ -103,6 +103,10 @@ export const featuredProjects = [
     kicker: 'GENERATIVE AI · MULTI-AGENT · FYP',
     meta: 'Final Year Project · Team of 2',
     period: '2025 – 2026',
+    repo: 'https://github.com/farhan-hash404/Ai-Content-Factory',
+    actions: [
+      { label: 'GitHub', href: 'https://github.com/farhan-hash404/Ai-Content-Factory', icon: 'github' },
+    ],
     tagline:
       'A multi-agent content system: one topic in, researched and fact-checked long-form out — then repurposed into five publishing formats.',
     stack: ['Python', 'LangGraph', 'LangChain', 'LLMs', 'FastAPI', 'Next.js'],
@@ -184,8 +188,7 @@ export const featuredProjects = [
     live: true,
     repo: 'https://github.com/farhan-hash404/Stick-Fighter',
     actions: [
-      { label: 'Visit site', href: 'https://stickfighterio.netlify.app/', icon: 'external' },
-      { label: 'Live demo', href: 'https://stickfighterio.netlify.app/', icon: 'external' },
+      { label: 'Live Demo', href: 'https://stickfighterio.netlify.app/', icon: 'external' },
       { label: 'GitHub', href: 'https://github.com/farhan-hash404/Stick-Fighter', icon: 'github' },
     ],
     short: [
@@ -261,6 +264,7 @@ export const timeline = [
     org: 'University of Peshawar',
     location: 'Peshawar · Team of 2',
     period: '2025 — 2026',
+    repo: 'https://github.com/farhan-hash404/Ai-Content-Factory',
     bullets: [
       'Designed a multi-agent Generative AI system where specialised agents research, outline, draft, and refine long-form content.',
       'Implemented LangGraph orchestration and state handoff between agents for coherent, structured output from one prompt.',
@@ -285,6 +289,7 @@ export const timeline = [
     org: 'NAVTTC · National Vocational & Technical Training Commission',
     location: 'Pakistan',
     period: 'Training',
+    proof: '/certificates/navttc-mern-stack-development.jpg',
     bullets: [
       'Full-stack web development across MongoDB, Express.js, React, and Node.js.',
       'REST API design and integration, plus modern JavaScript and Next.js fundamentals.',
@@ -296,6 +301,7 @@ export const timeline = [
     org: 'Saylani Mass IT Training (SMIT)',
     location: 'Pakistan',
     period: 'Training',
+    proof: '/certificates/saylani-web-and-mobile-app-development.jpg',
     bullets: [
       'Foundations in web and application development, covering front-end and back-end delivery.',
     ],
@@ -406,13 +412,17 @@ export const certifications = [
   },
   {
     title: 'MERN Stack Development',
-    issuer: 'NAVTTC · National Vocational & Technical Training Commission',
-    tag: 'Full Stack',
+    issuer: 'NAVTTC · Prime Minister\'s Youth Skills Development Program',
+    tag: 'Full Stack · Grade A+',
+    proof: '/certificates/navttc-mern-stack-development.jpg',
+    proofLabel: 'View Certificate',
   },
   {
     title: 'Web and App Development',
     issuer: 'Saylani Mass IT Training (SMIT)',
-    tag: 'Web',
+    tag: 'Web & Mobile Development',
+    proof: '/certificates/saylani-web-and-mobile-app-development.jpg',
+    proofLabel: 'View Certificate',
   },
 ]
 
