@@ -137,6 +137,9 @@ export const featuredProjects = [
     visual: 'court',
     live: true,
     repo: 'https://github.com/farhan-hash404/MootCourtSimulator',
+    actions: [
+      { label: 'GitHub', href: 'https://github.com/farhan-hash404/MootCourtSimulator', icon: 'github' },
+    ],
     award: 'Top 5 — GIKI Capstone Competition (out of 35 projects)',
     awardProof: '/certificates/certificate-of-honorable-mention.jpg',
     short: [
@@ -158,6 +161,9 @@ export const featuredProjects = [
     meta: 'Full-Stack AI Platform',
     period: '2026',
     repo: 'https://github.com/farhan-hash404/Dev-Signal-',
+    actions: [
+      { label: 'GitHub', href: 'https://github.com/farhan-hash404/Dev-Signal-', icon: 'github' },
+    ],
     tagline:
       'Mines developer forums for real complaints, then turns the recurring ones into scored pain points, product ideas, and full PRDs.',
     stack: ['Next.js', 'TypeScript', 'FastAPI', 'Gemini', 'PostgreSQL', 'Celery', 'Redis'],
@@ -379,6 +385,14 @@ export const stack = [
 
 export const certifications = [
   {
+    title: 'IBM Generative AI Engineering',
+    issuer: 'IBM · Coursera · Sep 2026',
+    tag: 'Professional Certificate · 16 Courses',
+    accent: true,
+    proof: 'https://www.coursera.org/account/accomplishments/professional-cert/PRIEX53TQQIP',
+    proofLabel: 'View Certificate',
+  },
+  {
     title: 'Top 5 — MootCourtSimulator (Honorable Mention)',
     issuer: 'GIK Institute & Asher Aziz Foundation · Aug 2026',
     tag: 'Honorable Mention · Top 5 of 35',
@@ -393,22 +407,6 @@ export const certifications = [
     accent: true,
     proof: '/certificates/gik-advanced-ai-bootcamp-completion.jpg',
     proofLabel: 'View Proof',
-  },
-  {
-    title: 'Fundamentals of Deep Learning',
-    issuer: 'NVIDIA · Whizlabs (Coursera) · Jun 2026',
-    tag: 'Deep Learning',
-    proof: '/certificates/nvidia-fundamentals-of-deep-learning.pdf',
-    verifyUrl: 'https://coursera.org/verify/XHB4QTIBGXXX',
-    proofLabel: 'View Certificate',
-  },
-  {
-    title: 'Fundamentals of Machine Learning',
-    issuer: 'NVIDIA · Whizlabs (Coursera) · Jun 2026',
-    tag: 'Machine Learning',
-    proof: '/certificates/nvidia-fundamentals-of-machine-learning.pdf',
-    verifyUrl: 'https://coursera.org/verify/I5ZRELZMVZYV',
-    proofLabel: 'View Certificate',
   },
   {
     title: 'MERN Stack Development',

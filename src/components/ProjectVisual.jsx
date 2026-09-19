@@ -1,8 +1,5 @@
-import { createContext, useContext } from 'react'
 import Icon from './Icon'
 import './ProjectVisual.css'
-
-const RepoContext = createContext(null)
 
 /**
  * Each project gets a schematic of how it actually works rather than a
@@ -10,10 +7,7 @@ const RepoContext = createContext(null)
  * curve, a churn split. Pure SVG, no assets to ship.
  */
 
-const Frame = ({ children, label, caption = '', foot = [], repo: repoProp, w = 520, h = 340 }) => {
-  const contextRepo = useContext(RepoContext)
-  const repo = repoProp || contextRepo
-
+const Frame = ({ children, label, caption = '', foot = [], w = 520, h = 340 }) => {
   return (
     <div className="pv">
       <div className="pv__chrome">
@@ -49,21 +43,6 @@ const Frame = ({ children, label, caption = '', foot = [], repo: repoProp, w = 5
             <span key={f}>{f}</span>
           ))}
         </div>
-
-        {repo && (
-          <a
-            className="pv__githubBtn"
-            href={repo}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cursor="link"
-            aria-label="View on GitHub"
-          >
-            <Icon name="github" size={15} />
-            <span>GitHub</span>
-            <Icon name="arrowUpRight" size={13} />
-          </a>
-        )}
       </div>
     </div>
   )
@@ -737,11 +716,7 @@ const registry = {
   churn: ChurnVisual,
 }
 
-export default function ProjectVisual({ kind, repo }) {
+export default function ProjectVisual({ kind }) {
   const V = registry[kind] || FactoryVisual
-  return (
-    <RepoContext.Provider value={repo}>
-      <V repo={repo} />
-    </RepoContext.Provider>
-  )
+  return <V />
 }

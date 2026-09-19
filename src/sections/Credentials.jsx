@@ -29,8 +29,10 @@ export default function Credentials() {
 
 function CertCard({ c, delay }) {
   const spot = useSpotlight()
-  const CardTag = c.proof ? 'a' : 'article'
-  const linkProps = c.proof
+  const hasMultipleLinks = Boolean(c.proof && c.verifyUrl)
+  const isOuterLink = Boolean(c.proof && !hasMultipleLinks)
+  const CardTag = isOuterLink ? 'a' : 'article'
+  const linkProps = isOuterLink
     ? {
         href: c.proof,
         target: '_blank',
@@ -40,10 +42,17 @@ function CertCard({ c, delay }) {
       }
     : {}
 
+  const handleCardClick = (e) => {
+    if (!c.proof || isOuterLink) return
+    if (e.target.closest('a, button')) return
+    window.open(c.proof, '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <CardTag
       className={`cert card spotlight reveal ${c.accent ? 'is-accent' : ''} ${c.proof ? 'is-link' : ''}`}
       style={{ '--reveal-delay': `${delay}ms` }}
+      onClick={handleCardClick}
       {...spot}
       {...linkProps}
     >
@@ -52,10 +61,25 @@ function CertCard({ c, delay }) {
           <Icon name={c.accent ? 'trophy' : 'medal'} size={17} />
         </div>
         {c.proof && (
-          <span className="cert__proofBadge mono">
-            <span>{c.proofLabel || 'View Proof'}</span>
-            <Icon name="arrowUpRight" size={11} />
-          </span>
+          hasMultipleLinks ? (
+            <a
+              href={c.proof}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cert__proofBadge mono"
+              data-cursor="link"
+              title={`View proof for ${c.title}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <span>{c.proofLabel || 'View Proof'}</span>
+              <Icon name="arrowUpRight" size={11} />
+            </a>
+          ) : (
+            <span className="cert__proofBadge mono">
+              <span>{c.proofLabel || 'View Proof'}</span>
+              <Icon name="arrowUpRight" size={11} />
+            </span>
+          )
         )}
       </div>
       <p className="cert__tag mono">{c.tag}</p>
@@ -70,8 +94,9 @@ function CertCard({ c, delay }) {
             rel="noopener noreferrer"
             className="cert__verifyLink mono"
             data-cursor="link"
+            title={`Verify ${c.title} on Coursera`}
           >
-            <span>Verify on Coursera</span>
+            <span>{c.verifyLabel || 'Verify on Coursera'}</span>
             <Icon name="arrowUpRight" size={10} />
           </a>
         </div>

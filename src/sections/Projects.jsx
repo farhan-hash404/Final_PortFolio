@@ -114,21 +114,34 @@ function FeaturedCard({ p, flip }) {
           ))}
         </div>
 
-        {p.actions && p.actions.length > 0 && (
+        {((p.actions && p.actions.length > 0) || p.repo) && (
           <div className="show__actions">
-            {p.actions.map((act) => (
+            {p.actions && p.actions.length > 0 ? (
+              p.actions.map((act) => (
+                <Button
+                  key={act.label}
+                  href={act.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant={act.variant || 'solid'}
+                  icon={act.icon || (act.label.toLowerCase().includes('github') ? 'github' : 'external')}
+                  className="show__actionBtn"
+                >
+                  {act.label}
+                </Button>
+              ))
+            ) : (
               <Button
-                key={act.label}
-                href={act.href}
+                href={p.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                variant={act.variant || 'solid'}
-                icon={act.icon || 'external'}
+                variant="solid"
+                icon="github"
                 className="show__actionBtn"
               >
-                {act.label}
+                GitHub
               </Button>
-            ))}
+            )}
           </div>
         )}
 
@@ -165,10 +178,7 @@ function FeaturedCard({ p, flip }) {
       </div>
 
       <div className="show__visual" data-cursor="view" data-cursor-label="SCHEMA">
-        <ProjectVisual
-          kind={p.visual}
-          repo={p.repo || p.actions?.find((a) => a.icon === 'github' || a.label?.toLowerCase()?.includes('github'))?.href}
-        />
+        <ProjectVisual kind={p.visual} />
       </div>
     </article>
   )
