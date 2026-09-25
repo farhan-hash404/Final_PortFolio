@@ -393,6 +393,16 @@ export const certifications = [
     proofLabel: 'View Certificate',
   },
   {
+    title: 'IBM Introduction to Computer Vision and Image Processing',
+    issuer: 'IBM · Coursera · Sep 2026',
+    tag: 'Course Certificate · Computer Vision',
+    accent: true,
+    proof: '/certificates/ibm-introduction-to-computer-vision-and-image-processing.png',
+    proofLabel: 'View Certificate',
+    verifyUrl: 'https://www.coursera.org/account/accomplishments/certificate/VEU3GZ4CPZ2K',
+    verifyLabel: 'Verify on Coursera',
+  },
+  {
     title: 'Top 5 — MootCourtSimulator (Honorable Mention)',
     issuer: 'GIK Institute & Asher Aziz Foundation · Aug 2026',
     tag: 'Honorable Mention · Top 5 of 35',
