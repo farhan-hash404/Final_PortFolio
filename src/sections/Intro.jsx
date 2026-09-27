@@ -76,13 +76,21 @@ export default function Intro({ onOpenEmail }) {
 
       {/* ---- points + focus card ---- */}
       <div className="intro__mid">
-        <ul className="intro__points reveal" style={{ '--reveal-delay': '210ms' }}>
-          {hero.points.map((p) => (
-            <li key={p.lead}>
-              <strong>{p.lead}</strong> — {p.body}
-            </li>
-          ))}
-        </ul>
+        <div className="intro__points-wrap">
+          <ul className="intro__points reveal" style={{ '--reveal-delay': '210ms' }}>
+            {hero.points.map((p) => (
+              <li key={p.lead}>
+                <strong>{p.lead}</strong> — {p.body}
+              </li>
+            ))}
+          </ul>
+          
+          <div className="reveal" style={{ '--reveal-delay': '230ms', marginTop: '28px', paddingLeft: '20px' }}>
+            <Button variant="quiet" icon="download" href={profile.cv} download>
+              Download CV
+            </Button>
+          </div>
+        </div>
 
         <div
           className="intro__focus card spotlight reveal"
