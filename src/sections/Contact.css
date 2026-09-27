@@ -171,13 +171,28 @@ button.ct__link {
 }
 
 @media (max-width: 620px) {
+  /* Three buttons sharing a 375px row left ~86px each, and the email is
+     20 characters — it overflowed its own button and ran into the one
+     beside it. Stacked full-width they all fit with room to spare, and
+     they're a far better tap target than an 86px sliver. */
+  .ct__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
   .ct__actions .btn {
-    flex: 1;
+    flex: none;
+    width: 100%;
+  }
+  .ct__actions .btn__inner {
+    justify-content: center;
     min-width: 0;
   }
+  /* min-width:0 above is what actually lets this clip; without it the
+     flex item refuses to shrink and the text just spills. */
   .ct__actions .btn__text {
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .ft {
     flex-direction: column;

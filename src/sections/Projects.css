@@ -63,255 +63,420 @@
   font-style: normal;
 }
 
-/* ---------------- showcase ---------------- */
-.show {
+/* ---------------- project rows ---------------- */
+/* Deliberately borderless. The old version wrapped each project in a big
+   panel, which fought the page for attention; the work itself should be
+   the only thing framed. */
+.rows {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 26px;
+  gap: clamp(44px, 6vw, 72px);
+  margin-top: 34px;
 }
 
-.show__main {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
-  min-height: 440px;
-  transition:
-    border-color 0.4s var(--ease),
-    box-shadow 0.4s var(--ease);
-}
-/* No transform here on purpose: these cards are tall enough that the
-   cursor is often still over one while the page scrolls past it. A
-   translateY on :hover would shift the card under a stationary cursor,
-   which re-triggers :hover, which shifts it again — a flicker loop.
-   Depth comes from border + shadow instead, which don't move the box. */
-.show__main:hover {
-  border-color: var(--line-2);
-  box-shadow: var(--shadow);
-}
-
-/* Even-indexed cards put the schematic on the left. */
-.show__main.is-flipped .show__body {
-  order: 2;
-}
-.show__main.is-flipped .show__visual {
-  order: 1;
-  border-left: none;
-  border-right: 1px solid var(--line);
-}
-
-.show__body {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(24px, 3vw, 40px);
-}
-
-.show__kicker {
-  font-size: 10px;
-  color: var(--ink-3);
-}
-
-.show__title {
-  margin-top: 16px;
-  font-size: clamp(26px, 3.2vw, 42px);
-  letter-spacing: -0.035em;
-  line-height: 1.04;
-}
-
-.show__tagline {
-  margin-top: 14px;
-  font-size: 14.5px;
-  line-height: 1.6;
-  color: var(--ink-2);
-}
-
-.show__points {
+.pr__head {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 20px;
-  padding: 0;
-  list-style: none;
 }
-.show__points li {
-  position: relative;
-  padding-left: 17px;
-  font-size: 13.5px;
-  line-height: 1.58;
-  color: var(--ink-2);
+
+.pr__eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--ink-3);
 }
-.show__points li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 8px;
+.pr__eyebrow i {
+  font-style: normal;
+  color: var(--ink-4);
+}
+
+.pr__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+}
+.pr__live b {
   width: 5px;
   height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.7;
-}
-
-.show__stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 22px;
-}
-.show__stack span {
-  padding: 4px 10px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.05em;
-  color: var(--ink-2);
-  transition:
-    border-color 0.3s var(--ease),
-    color 0.3s var(--ease);
-}
-.show__stack span:hover {
-  border-color: var(--line-accent);
-  color: var(--accent);
-}
-
-.show__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.show__actionBtn {
-  border: 1.5px solid var(--accent);
-  background: var(--accent);
-  color: var(--accent-ink);
-  border-radius: 10px;
-  font-weight: 700;
-  box-shadow: 0 2px 14px rgba(217, 242, 39, 0.28);
-  transition:
-    transform 0.25s var(--ease),
-    border-color 0.25s var(--ease),
-    background 0.25s var(--ease),
-    color 0.25s var(--ease),
-    box-shadow 0.25s var(--ease);
-}
-.show__actionBtn .btn__inner {
-  padding: 8px 18px;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--accent-ink);
-}
-.show__actionBtn svg {
-  color: var(--accent-ink);
-  stroke: var(--accent-ink);
-}
-.show__actionBtn:hover {
-  background: #f4ff5c;
-  border-color: #f4ff5c;
-  color: #000;
-  box-shadow: 0 4px 22px rgba(217, 242, 39, 0.55);
-  transform: translateY(-2px);
-}
-.show__actionBtn:hover .btn__inner,
-.show__actionBtn:hover svg {
-  color: #000;
-  stroke: #000;
-}
-
-.show__award {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  align-self: flex-start;
-  margin-top: 18px;
-  padding: 6px 12px;
-  background: var(--accent-soft);
-  border: 1px solid var(--line-accent);
-  border-radius: 999px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--accent);
-}
-.show__award--link {
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s var(--ease);
-}
-.show__award--link:hover {
-  background: var(--accent);
-  color: #0b0f17;
-  border-color: var(--accent);
-  transform: translateY(-1px);
-}
-
-.show__repo {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 5px 11px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--ink-2);
-  transition:
-    border-color 0.3s var(--ease),
-    background 0.3s var(--ease),
-    color 0.3s var(--ease);
-}
-.show__repo:hover {
-  border-color: var(--line-accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-.show__repo svg:last-child {
-  transition: transform 0.3s var(--ease);
-}
-.show__repo:hover svg:last-child {
-  transform: translate(2px, -2px);
-}
-
-.show__meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: auto;
-  padding-top: 24px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  color: var(--ink-3);
-}
-.show__meta i {
-  flex: 1;
-  height: 1px;
-  background: var(--line);
-}
-
-.show__live {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--accent);
-}
-.show__live b {
-  width: 6px;
-  height: 6px;
   border-radius: 50%;
   background: var(--accent);
   animation: railpulse 2.4s ease-out infinite;
 }
 
-/* visual half */
-.show__visual {
+.pr__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.pr__title {
+  font-size: clamp(26px, 3.4vw, 40px);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.pr__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pr__tagline {
+  max-width: 68ch;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.pr__award {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 5px 11px;
+  background: var(--accent-soft);
+  border: 1px solid var(--line-accent);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.pr__award--link {
+  transition:
+    background 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+}
+.pr__award--link:hover {
+  background: rgba(217, 242, 39, 0.18);
+  border-color: rgba(217, 242, 39, 0.55);
+}
+
+/* ---------------- screenshot strip ---------------- */
+.strip {
   position: relative;
-  border-left: 1px solid var(--line);
+  margin-top: 18px;
+}
+
+.strip__track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  align-items: flex-start;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  padding-bottom: 2px;
+}
+.strip__track::-webkit-scrollbar {
+  display: none;
+}
+
+.frame {
+  position: relative;
+  flex: 0 0 auto;
+  /* Middle ground. At ~270px these full desktop pages turned to mush; at
+     430px they dominated the row and only ~2.5 fit. The tilt being halved
+     is what buys the room to come back down without the blur returning. */
+  width: clamp(250px, 27vw, 330px);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
   overflow: hidden;
+  transition:
+    border-color 0.35s var(--ease),
+    background 0.35s var(--ease);
+}
+.frame:hover {
+  border-color: var(--line-2);
+  background: var(--panel-2);
+}
+
+/* Schematics sit on charcoal rather than the near-black used behind
+   screenshots, so the diagram reads as a drawing, not a dead frame. */
+.frame--schema .frame__media {
+  background: #1c1c1c;
+}
+
+.frame__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+  /* The project's own colour, so each strip reads as its own thing. */
+  background: var(--tint, #141414);
+}
+
+/* The screenshot is inset on that backdrop and carries its own edge,
+   rather than bleeding to the frame — it reads as a captured artefact
+   sitting on the product's colour. The padding is also what gives the
+   tilt somewhere to go without clipping a corner.
+
+   Its aspect matches the frame's, and every screenshot is normalised to
+   16:10 on disk, so `cover` never has to crop the sides off a page. */
+.frame__plate {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 6px;
+  overflow: hidden;
+  /* No fill and no dark stroke. The image is already an exact 16:10 so it
+     covers the plate completely — any background here only ever showed as
+     a black ring at the edges.
+
+     Separation comes from the tint contrasting with the screenshot plus a
+     real drop shadow, not from an outline — an outline was what read as a
+     harsh black boundary before. */
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 16px 34px -14px rgba(0, 0, 0, 0.6),
+    0 3px 10px -3px rgba(0, 0, 0, 0.35);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.5s var(--ease);
+}
+.frame--shot:hover .frame__plate {
+  transform: rotate(var(--tilt, 0deg)) scale(1.03);
+}
+
+.frame__plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.frame__bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 11px;
+  border-top: 1px solid var(--line);
+  font-size: 9px;
+}
+.frame__n {
+  color: var(--accent);
+}
+.frame__label {
+  color: var(--ink-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* strip arrows */
+.strip__nav {
+  position: absolute;
+  top: calc(50% - 20px);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(14, 14, 14, 0.9);
+  border: 1px solid var(--line-2);
+  color: var(--ink);
+  backdrop-filter: blur(6px);
+  transition:
+    background 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+.strip__nav:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.strip__nav--prev {
+  left: -10px;
+}
+.strip__nav--next {
+  right: -10px;
+}
+
+/* ---------------- collapsed technical detail ---------------- */
+/* The substance is still here, just not shouting. Default view stays
+   minimal; anyone who wants the engineering opens it. */
+.pr__more {
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+/* Was a 10px dim mono label that read as a caption, not a control. It's a
+   bordered pill now so it's obviously clickable at a glance. */
+.pr__more summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 8px 15px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+  transition:
+    border-color 0.3s var(--ease),
+    background 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+.pr__more summary::-webkit-details-marker {
+  display: none;
+}
+.pr__more summary:hover {
+  border-color: var(--line-accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.pr__more summary svg {
+  transition: transform 0.3s var(--ease);
+}
+.pr__more[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.pr__points {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 16px;
+  padding: 0;
+  list-style: none;
+}
+.pr__points li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.pr__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+}
+
+.pr__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+  padding-bottom: 4px;
+}
+.pr__stack span {
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--ink-2);
+}
+
+/* ---------------- lightbox ---------------- */
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+}
+.lb__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+  animation: lbFade 0.2s var(--ease);
+}
+.lb__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  max-height: 100%;
+  background: var(--panel);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  overflow: hidden;
+  animation: lbRise 0.28s var(--ease);
+}
+.lb__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+  color: var(--ink-2);
+}
+.lb__head i {
+  font-style: normal;
+  color: var(--ink-4);
+}
+.lb__close {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink-2);
+  transition:
+    border-color 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+.lb__close:hover {
+  border-color: var(--line-accent);
+  color: var(--accent);
+}
+.lb__panel img {
+  min-height: 0;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* The schematic is vector, so it just needs room to breathe. */
+.lb__schema {
+  width: min(92vw, 900px);
+  aspect-ratio: 520 / 340;
+  background: #1c1c1c;
+}
+
+@keyframes lbFade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes lbRise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+  }
 }
 
 /* ---------------- extras ---------------- */
@@ -463,72 +628,54 @@
 }
 
 /* ---------------- responsive ---------------- */
-/* Desktop keeps the full write-up; the condensed list stays hidden. */
-.show__points--short {
-  display: none;
-}
-
-@media (max-width: 980px) {
-  .show__main,
-  .show__main.is-flipped {
-    grid-template-columns: 1fr;
+@media (max-width: 760px) {
+  .rows {
+    gap: 42px;
   }
 
-  /* Lead with what the project *is*, then show the schematic. Reading a
-     dense diagram before any context is backwards on a narrow screen. */
-  .show__main .show__body,
-  .show__main.is-flipped .show__body {
-    order: 1;
-  }
-  .show__main .show__visual,
-  .show__main.is-flipped .show__visual {
-    order: 2;
-    min-height: 280px;
-    border-left: none;
-    border-right: none;
-    border-top: 1px solid var(--line);
+  /* The full kicker wraps to three lines on a phone and strands the index
+     on its own. Tightening the tracking keeps it to one or two. */
+  .pr__eyebrow {
+    gap: 6px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
   }
 
-  /* Swap the full bullet list for the condensed one. */
-  .show__points {
+  /* Title and buttons stop competing for one line. */
+  .pr__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .pr__actions {
+    width: 100%;
+  }
+
+  .pr__tagline {
+    font-size: 13.5px;
+  }
+
+  /* Wider frames read better than more of them on a phone, and the strip
+     bleeds to the screen edges so nothing looks boxed in. */
+  .frame {
+    width: 78vw;
+    max-width: 320px;
+  }
+  .strip__track {
+    padding-inline: var(--gut);
+    margin-inline: calc(var(--gut) * -1);
+  }
+  .strip__nav {
     display: none;
   }
-  .show__points--short {
-    display: flex;
-  }
-}
 
-@media (max-width: 620px) {
-  /* The schematics carry a lot of labelled detail. Squeezed to phone
-     width the 560-unit viewBox scales to ~0.6, rendering 9px type at
-     about 5px. Scroll the panel sideways at a legible size instead of
-     shrinking it into illegibility — the clipped edge is its own hint. */
-  .show__visual {
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-  }
-  .show__visual > .pv {
-    min-width: 500px;
-  }
-
-  .show__body {
-    padding: 22px 18px;
-  }
-  .show__title {
-    font-size: clamp(23px, 6.4vw, 28px);
-  }
-  .show__points--short li {
+  .pr__points li {
     font-size: 13px;
   }
+}
 
-  /* The rule between meta items has nowhere to go once wrapped. */
-  .show__meta {
-    flex-wrap: wrap;
-    gap: 6px 12px;
-  }
-  .show__meta i {
-    display: none;
+@media (max-width: 480px) {
+  .frame {
+    width: 84vw;
   }
 }

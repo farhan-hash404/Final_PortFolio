@@ -1,7 +1,59 @@
+import { useEffect, useRef, useState } from 'react'
 import { profile, sections } from '../data/content'
 import './Rail.css'
 
+/**
+ * On a phone the bar is fixed overhead the whole way down the page, which
+ * costs vertical room on the screen that can least spare it. It now slides
+ * away once you're reading and comes back the moment you scroll up, so the
+ * content area gets the full viewport while you're moving through it.
+ */
+function useHideOnScroll(disabled) {
+  const [hidden, setHidden] = useState(false)
+  const last = useRef(0)
+
+  useEffect(() => {
+    if (disabled) {
+      setHidden(false)
+      return
+    }
+    // Time-throttled rather than rAF-throttled on purpose: rAF is part of
+    // the render loop, which is exactly what gets starved on a struggling
+    // phone. A timestamp gate keeps the bar responsive regardless.
+    let lastRun = 0
+    const measure = () => {
+      lastRun = performance.now()
+      const y = window.scrollY
+      // Near the top the bar is always shown, unconditionally. Deriving it
+      // from scroll direction alone can strand it off-screen after a jump
+      // that reports no delta — an anchor scroll, or a restored position.
+      if (y <= 140) {
+        setHidden(false)
+        last.current = y
+        return
+      }
+      const delta = y - last.current
+      if (Math.abs(delta) > 6) {
+        setHidden(delta > 0)
+        last.current = y
+      }
+    }
+    const onScroll = () => {
+      if (performance.now() - lastRun > 80) measure()
+    }
+    last.current = window.scrollY
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [disabled])
+
+  return hidden
+}
+
 export default function Rail({ active, onOpenPalette, open, onToggle }) {
+  // Keep the bar pinned while the drawer is open, or it slides out from
+  // under its own close button.
+  const hidden = useHideOnScroll(open)
+
   const go = (e, id) => {
     e.preventDefault()
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -11,7 +63,7 @@ export default function Rail({ active, onOpenPalette, open, onToggle }) {
   return (
     <>
       {/* Mobile top bar */}
-      <div className="railbar">
+      <div className={`railbar ${hidden ? 'is-hidden' : ''}`}>
         <div className="railbar__id">
           <span className="railbar__name">{profile.name}</span>
           <span className="railbar__role">{profile.shortRole}</span>

@@ -1,4 +1,4 @@
-import Icon from './Icon'
+
 import './ProjectVisual.css'
 
 /**
@@ -7,25 +7,19 @@ import './ProjectVisual.css'
  * curve, a churn split. Pure SVG, no assets to ship.
  */
 
-const Frame = ({ children, label, caption = '', foot = [], w = 520, h = 340 }) => {
+/**
+ * Stripped back to just the drawing. The old version wrapped every diagram
+ * in faux window chrome, a tag footer and a background grid — all of it
+ * noise that competed with the schematic itself, and none of it legible
+ * now these render as strip frames rather than half a page.
+ */
+const Frame = ({ children, label, w = 520, h = 340 }) => {
   return (
     <div className="pv">
-      <div className="pv__chrome">
-        <span className="pv__dots">
-          <i />
-          <i />
-          <i />
-        </span>
-        <span className="pv__chromeLabel">{caption}</span>
-      </div>
-
       <svg viewBox={`0 0 ${w} ${h}`} className="pv__svg" role="img" aria-label={label}>
         <defs>
-          <pattern id="pvGrid" width="26" height="26" patternUnits="userSpaceOnUse">
-            <path d="M26 0H0v26" fill="none" stroke="rgba(255,255,255,.045)" strokeWidth="1" />
-          </pattern>
           <linearGradient id="pvFade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#d9f227" stopOpacity=".28" />
+            <stop offset="0%" stopColor="#d9f227" stopOpacity=".24" />
             <stop offset="100%" stopColor="#d9f227" stopOpacity="0" />
           </linearGradient>
           <linearGradient id="pvLine" x1="0" y1="0" x2="1" y2="0">
@@ -33,17 +27,8 @@ const Frame = ({ children, label, caption = '', foot = [], w = 520, h = 340 }) =
             <stop offset="100%" stopColor="#d9f227" />
           </linearGradient>
         </defs>
-        <rect width={w} height={h} fill="url(#pvGrid)" />
         {children}
       </svg>
-
-      <div className="pv__foot">
-        <div className="pv__footTags">
-          {foot.map((f) => (
-            <span key={f}>{f}</span>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }

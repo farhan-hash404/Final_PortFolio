@@ -111,6 +111,17 @@ export const featuredProjects = [
       'A multi-agent content system: one topic in, researched and fact-checked long-form out — then repurposed into five publishing formats.',
     stack: ['Python', 'LangGraph', 'LangChain', 'LLMs', 'FastAPI', 'Next.js'],
     visual: 'factory',
+    /* Backdrop the frames sit on, pulled from the product's own palette so
+       each project reads as its own thing in the strip. */
+    tint: 'linear-gradient(140deg, #2f60d8, #16307a)',
+    shots: [
+      { src: '/shots/content-factory/01-dashboard.jpg', label: 'Dashboard' },
+      { src: '/shots/content-factory/02-pipeline.jpg', label: 'Pipeline run' },
+      { src: '/shots/content-factory/03-blog.jpg', label: 'Blog output' },
+      { src: '/shots/content-factory/04-video.jpg', label: 'Video' },
+      { src: '/shots/content-factory/05-images.jpg', label: 'Images' },
+      { src: '/shots/content-factory/06-podcast.jpg', label: 'Podcast' },
+    ],
     /* Condensed for narrow screens — the full `highlights` below are far
        too much to scroll past on a phone. */
     short: [
@@ -136,6 +147,15 @@ export const featuredProjects = [
     stack: ['Python', 'LLMs', 'Multi-Agent', 'FastAPI'],
     visual: 'court',
     live: true,
+    /* Parchment into walnut — the cause-list palette the app itself uses. */
+    tint: 'linear-gradient(140deg, #8d6c3d, #41301b)',
+    shots: [
+      { src: '/shots/mootcourt/01-case-library.jpg', label: 'Case library' },
+      { src: '/shots/mootcourt/02-case-brief.jpg', label: 'Case brief' },
+      { src: '/shots/mootcourt/03-courtroom.jpg', label: 'The courtroom' },
+      { src: '/shots/mootcourt/04-chambers.jpg', label: 'Chambers' },
+      { src: '/shots/mootcourt/05-statutes.jpg', label: 'Statutes' },
+    ],
     repo: 'https://github.com/farhan-hash404/MootCourtSimulator',
     actions: [
       { label: 'GitHub', href: 'https://github.com/farhan-hash404/MootCourtSimulator', icon: 'github' },
@@ -168,6 +188,18 @@ export const featuredProjects = [
       'Mines developer forums for real complaints, then turns the recurring ones into scored pain points, product ideas, and full PRDs.',
     stack: ['Next.js', 'TypeScript', 'FastAPI', 'Gemini', 'PostgreSQL', 'Celery', 'Redis'],
     visual: 'signal',
+    tint: 'linear-gradient(140deg, #42607f, #1c2a3a)',
+    /* Real product screenshots lead the strip; the schematic follows as the
+       last frame for anyone who wants the architecture. */
+    /* Ordered as the product is actually used: run a discovery, read the
+       problems it found, see the ideas generated from them, then the
+       opportunities those rank into. */
+    shots: [
+      { src: '/shots/dev-signal/01-discover.jpg', label: 'Discover' },
+      { src: '/shots/dev-signal/02-problems.jpg', label: 'Problems' },
+      { src: '/shots/dev-signal/03-ideas.jpg', label: 'Ideas' },
+      { src: '/shots/dev-signal/04-opportunities.jpg', label: 'Opportunities' },
+    ],
     short: [
       'Async scrapers pull discussions from developer subreddits and Stack Overflow, then a two-pass Gemini pipeline turns them into scored pain points.',
       'A second pass generates SaaS product ideas and writes full PRDs — features, metrics, tech stack and competitors.',
@@ -191,6 +223,15 @@ export const featuredProjects = [
       "A 2D fighting game whose opponent isn't scripted and isn't a pre-trained checkpoint — it runs PPO live in the browser, learning from you mid-fight.",
     stack: ['TypeScript', 'HTML5 Canvas', 'Vite', 'PPO', 'PyTorch', 'Gymnasium'],
     visual: 'ppo',
+    /* Dark, unlike the other three — this product's own UI is dark navy,
+       and a light backdrop behind it would fight the screenshots. */
+    tint: 'linear-gradient(140deg, #a6b9d6, #5d7399)',
+    shots: [
+      { src: '/shots/stick-fighter/01-live-match.jpg', label: 'Live match' },
+      { src: '/shots/stick-fighter/02-learning-signal.jpg', label: 'Learning signal' },
+      { src: '/shots/stick-fighter/03-ppo-internals.jpg', label: 'PPO internals' },
+      { src: '/shots/stick-fighter/04-move-preference.jpg', label: 'Move preference' },
+    ],
     live: true,
     repo: 'https://github.com/farhan-hash404/Stick-Fighter',
     actions: [

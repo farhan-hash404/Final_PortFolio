@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { featuredProjects, marqueeTags, sideProjects } from '../data/content'
 import SectionHead from '../components/SectionHead'
 import ProjectVisual from '../components/ProjectVisual'
@@ -27,8 +27,19 @@ function Marquee() {
   )
 }
 
+/**
+ * Screenshots first, architecture schematic last. A project with no
+ * screenshots yet still gets a strip — just one frame holding the diagram.
+ */
+function framesFor(p) {
+  const shots = (p.shots || []).map((s, i) => ({ ...s, kind: 'shot', n: i + 1 }))
+  if (!p.visual) return shots
+  return [...shots, { kind: 'schema', visual: p.visual, label: 'Architecture', n: shots.length + 1 }]
+}
+
 export default function Projects() {
   const [open, setOpen] = useState(false)
+  const [lightbox, setLightbox] = useState(null)
 
   return (
     <section id="projects" className="proj">
@@ -40,10 +51,9 @@ export default function Projects() {
 
       <Marquee />
 
-      {/* ---------- featured stack: scroll through them in order ---------- */}
-      <div className="show">
-        {featuredProjects.map((p, idx) => (
-          <FeaturedCard key={p.id} p={p} flip={idx % 2 === 1} />
+      <div className="rows">
+        {featuredProjects.map((p) => (
+          <ProjectRow key={p.id} p={p} onOpenShot={setLightbox} />
         ))}
       </div>
 
@@ -71,116 +81,228 @@ export default function Projects() {
           </div>
         )}
       </div>
+
+      {lightbox && <Lightbox shot={lightbox} onClose={() => setLightbox(null)} />}
     </section>
   )
 }
 
-/* Alternating sides keep three tall cards from reading as one repeated
-   template; on narrow screens they collapse to visual-over-text. */
-function FeaturedCard({ p, flip }) {
-  // Deliberately no cursor-tracking spotlight here. These cards are huge,
-  // and a mouse-anchored radial gradient across that area repaints badly
-  // against scroll compositing. Hover lighting is plain CSS instead.
+function ProjectRow({ p, onOpenShot }) {
+  const frames = framesFor(p)
+
   return (
-    <article className={`show__main card reveal ${flip ? 'is-flipped' : ''}`}>
-      <div className="show__body">
-        <p className="show__kicker mono">
-          <span className="accent">{p.index}</span> — {p.kicker}
+    <article className="pr reveal">
+      <header className="pr__head">
+        <p className="pr__eyebrow mono">
+          <span className="accent">{p.index}</span>
+          <i>·</i>
+          {p.kicker}
+          <i>·</i>
+          <span className={p.live ? 'pr__live' : undefined}>
+            {p.live && <b />}
+            {p.period}
+          </span>
         </p>
 
-        <h3 className="show__title">{p.title}</h3>
-        <p className="show__tagline">{p.tagline}</p>
+        <div className="pr__row">
+          <h3 className="pr__title">{p.title}</h3>
 
-        {/* Both lists ship; CSS picks one per breakpoint. Cheaper and
-            flash-free versus a matchMedia hook, and display:none keeps the
-            hidden one out of the accessibility tree too. */}
-        <ul className="show__points">
-          {p.highlights.map((h) => (
-            <li key={h}>{h}</li>
-          ))}
-        </ul>
-
-        {p.short && (
-          <ul className="show__points show__points--short">
-            {p.short.map((h) => (
-              <li key={h}>{h}</li>
-            ))}
-          </ul>
-        )}
-
-        <div className="show__stack">
-          {p.stack.map((s) => (
-            <span key={s}>{s}</span>
-          ))}
-        </div>
-
-        {((p.actions && p.actions.length > 0) || p.repo) && (
-          <div className="show__actions">
-            {p.actions && p.actions.length > 0 ? (
-              p.actions.map((act) => (
+          {((p.actions && p.actions.length > 0) || p.repo) && (
+            <div className="pr__actions">
+              {(p.actions && p.actions.length > 0
+                ? p.actions
+                : [{ label: 'GitHub', href: p.repo, icon: 'github' }]
+              ).map((act) => (
                 <Button
                   key={act.label}
                   href={act.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant={act.variant || 'solid'}
-                  icon={act.icon || (act.label.toLowerCase().includes('github') ? 'github' : 'external')}
-                  className="show__actionBtn"
+                  variant={act.variant || 'quiet'}
+                  icon={act.icon || 'external'}
+                  className="btn--sm"
                 >
                   {act.label}
                 </Button>
-              ))
-            ) : (
-              <Button
-                href={p.repo}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="solid"
-                icon="github"
-                className="show__actionBtn"
-              >
-                GitHub
-              </Button>
-            )}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
 
-        {p.award && (
-          p.awardProof ? (
+        <p className="pr__tagline">{p.tagline}</p>
+
+        {p.award &&
+          (p.awardProof ? (
             <a
               href={p.awardProof}
               target="_blank"
               rel="noopener noreferrer"
-              className="show__award show__award--link"
+              className="pr__award pr__award--link"
               data-cursor="link"
               title="View Certificate of Honorable Mention"
             >
-              <Icon name="trophy" size={14} />
+              <Icon name="trophy" size={13} />
               <span>{p.award}</span>
-              <Icon name="arrowUpRight" size={12} />
+              <Icon name="arrowUpRight" size={11} />
             </a>
           ) : (
-            <p className="show__award">
-              <Icon name="trophy" size={14} />
+            <p className="pr__award">
+              <Icon name="trophy" size={13} />
               {p.award}
             </p>
-          )
-        )}
+          ))}
+      </header>
 
-        <div className="show__meta">
-          <span>{p.meta}</span>
-          <i />
-          <span className={p.live ? 'show__live' : ''}>
-            {p.live && <b />}
-            {p.period}
-          </span>
+      <Strip frames={frames} project={p} onOpenShot={onOpenShot} />
+
+      <details className="pr__more">
+        <summary data-cursor="link">
+          <Icon name="arrowDown" size={13} />
+          <span>Technical detail</span>
+        </summary>
+
+        <ul className="pr__points">
+          {(p.highlights || []).map((h) => (
+            <li key={h}>{h}</li>
+          ))}
+        </ul>
+
+        <div className="pr__stack">
+          {p.stack.map((s) => (
+            <span key={s}>{s}</span>
+          ))}
         </div>
+      </details>
+    </article>
+  )
+}
+
+/** Horizontal, snap-scrolling frame strip with an overlay next/prev control. */
+function Strip({ frames, project, onOpenShot }) {
+  const ref = useRef(null)
+  const [edge, setEdge] = useState({ start: true, end: false })
+
+  const measure = useCallback(() => {
+    const el = ref.current
+    if (!el) return
+    const max = el.scrollWidth - el.clientWidth
+    setEdge({ start: el.scrollLeft <= 2, end: el.scrollLeft >= max - 2 })
+  }, [])
+
+  useEffect(() => {
+    measure()
+    const el = ref.current
+    if (!el) return
+    el.addEventListener('scroll', measure, { passive: true })
+    window.addEventListener('resize', measure)
+    return () => {
+      el.removeEventListener('scroll', measure)
+      window.removeEventListener('resize', measure)
+    }
+  }, [measure])
+
+  const nudge = (dir) => {
+    const el = ref.current
+    if (!el) return
+    const card = el.querySelector('.frame')
+    const step = card ? card.getBoundingClientRect().width + 14 : el.clientWidth * 0.8
+    el.scrollBy({ left: dir * step, behavior: 'smooth' })
+  }
+
+  return (
+    <div className="strip" style={project.tint ? { '--tint': project.tint } : undefined}>
+      <div className="strip__track" ref={ref}>
+        {frames.map((f) => (
+          <Frame key={`${f.kind}-${f.n}`} f={f} project={project} onOpenShot={onOpenShot} />
+        ))}
       </div>
 
-      <div className="show__visual" data-cursor="view" data-cursor-label="SCHEMA">
-        <ProjectVisual kind={p.visual} />
+      {!edge.start && (
+        <button className="strip__nav strip__nav--prev" onClick={() => nudge(-1)} aria-label="Previous">
+          <Icon name="arrowLeft" size={16} />
+        </button>
+      )}
+      {!edge.end && (
+        <button className="strip__nav strip__nav--next" onClick={() => nudge(1)} aria-label="Next">
+          <Icon name="arrowRight" size={16} />
+        </button>
+      )}
+    </div>
+  )
+}
+
+/* Not every frame is tilted, and the ones that are lean different ways —
+   a uniform angle just reads as a mistake. Kept under a degree: rotation
+   forces the browser to resample the image, and anything stronger visibly
+   softened the UI text inside these screenshots. */
+const TILTS = ['-0.8deg', '0.6deg', '0deg', '-0.5deg', '0.7deg', '0deg']
+
+/**
+ * Every frame is the same size so the strip reads as one tidy row. A
+ * schematic can't be legible at that size, so it opens in the lightbox
+ * like a screenshot does rather than being given its own wider slot.
+ */
+function Frame({ f, project, onOpenShot }) {
+  const isSchema = f.kind === 'schema'
+
+  return (
+    <button
+      className={`frame ${isSchema ? 'frame--schema' : 'frame--shot'}`}
+      onClick={() => onOpenShot({ ...f, project: project.title })}
+      data-cursor="view"
+      data-cursor-label={isSchema ? 'OPEN' : 'VIEW'}
+      aria-label={`${project.title} — ${f.label}, open full size`}
+      style={{ '--tilt': isSchema ? '0deg' : TILTS[(f.n - 1) % TILTS.length] }}
+    >
+      <div className="frame__media">
+        {isSchema ? (
+          <ProjectVisual kind={f.visual} />
+        ) : (
+          <span className="frame__plate">
+            <img src={f.src} alt={`${project.title} — ${f.label}`} loading="lazy" decoding="async" />
+          </span>
+        )}
       </div>
-    </article>
+      <div className="frame__bar mono">
+        <span className="frame__n">{String(f.n).padStart(2, '0')}</span>
+        <span className="frame__label">{f.label}</span>
+      </div>
+    </button>
+  )
+}
+
+function Lightbox({ shot, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [onClose])
+
+  return (
+    <div className="lb" role="dialog" aria-modal="true" aria-label={`${shot.project} — ${shot.label}`}>
+      <div className="lb__scrim" onClick={onClose} />
+      <div className="lb__panel">
+        <div className="lb__head">
+          <span className="mono">
+            {shot.project} <i>·</i> {shot.label}
+          </span>
+          <button className="lb__close" onClick={onClose} aria-label="Close">
+            <Icon name="close" size={16} />
+          </button>
+        </div>
+        {shot.kind === 'schema' ? (
+          <div className="lb__schema">
+            <ProjectVisual kind={shot.visual} />
+          </div>
+        ) : (
+          <img src={shot.src} alt={`${shot.project} — ${shot.label}`} />
+        )}
+      </div>
+    </div>
   )
 }
 
