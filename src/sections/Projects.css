@@ -416,7 +416,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
+  width: min(1200px, 100%);
   max-height: 100%;
   background: var(--panel);
   border: 1px solid var(--line-2);
@@ -454,10 +454,18 @@
   border-color: var(--line-accent);
   color: var(--accent);
 }
-.lb__panel img {
+/* Tall page captures were clamped by max-height and letterboxed, so their
+   lower half was unreachable. The body scrolls instead: the image keeps
+   full width and every part of it can be reached. */
+.lb__body {
   min-height: 0;
-  max-width: 100%;
-  object-fit: contain;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.lb__panel img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* The schematic is vector, so it just needs room to breathe. */

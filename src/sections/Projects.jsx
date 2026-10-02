@@ -248,11 +248,20 @@ function Frame({ f, project, onOpenShot }) {
   return (
     <button
       className={`frame ${isSchema ? 'frame--schema' : 'frame--shot'}`}
-      onClick={() => onOpenShot({ ...f, project: project.title })}
+      onClick={() =>
+        onOpenShot({
+          ...f,
+          project: project.title,
+          src: isSchema ? f.src : f.src.replace(/\.jpg$/, '-full.jpg'),
+        })
+      }
       data-cursor="view"
       data-cursor-label={isSchema ? 'OPEN' : 'VIEW'}
       aria-label={`${project.title} — ${f.label}, open full size`}
       style={{ '--tilt': isSchema ? '0deg' : TILTS[(f.n - 1) % TILTS.length] }}
+      /* Thumbnails use the 16:10 crop; the lightbox gets the uncropped
+         original, so nothing is lost at full size. */
+      data-full={isSchema ? undefined : f.src.replace(/\.jpg$/, '-full.jpg')}
     >
       <div className="frame__media">
         {isSchema ? (
@@ -294,13 +303,15 @@ function Lightbox({ shot, onClose }) {
             <Icon name="close" size={16} />
           </button>
         </div>
-        {shot.kind === 'schema' ? (
-          <div className="lb__schema">
-            <ProjectVisual kind={shot.visual} />
-          </div>
-        ) : (
-          <img src={shot.src} alt={`${shot.project} — ${shot.label}`} />
-        )}
+        <div className="lb__body">
+          {shot.kind === 'schema' ? (
+            <div className="lb__schema">
+              <ProjectVisual kind={shot.visual} />
+            </div>
+          ) : (
+            <img src={shot.src} alt={`${shot.project} — ${shot.label}`} />
+          )}
+        </div>
       </div>
     </div>
   )

@@ -195,10 +195,10 @@ export const featuredProjects = [
        problems it found, see the ideas generated from them, then the
        opportunities those rank into. */
     shots: [
-      { src: '/shots/dev-signal/01-discover.jpg', label: 'Discover' },
-      { src: '/shots/dev-signal/02-problems.jpg', label: 'Problems' },
-      { src: '/shots/dev-signal/03-ideas.jpg', label: 'Ideas' },
-      { src: '/shots/dev-signal/04-opportunities.jpg', label: 'Opportunities' },
+      { src: '/shots/dev-signal/01-dashboard.png', label: 'Dashboard' },
+      { src: '/shots/dev-signal/02-discover.png', label: 'Discover' },
+      { src: '/shots/dev-signal/03-problems.png', label: 'Problems' },
+      { src: '/shots/dev-signal/04-ideas.png', label: 'Ideas' },
     ],
     short: [
       'Async scrapers pull discussions from developer subreddits and Stack Overflow, then a two-pass Gemini pipeline turns them into scored pain points.',
@@ -452,7 +452,7 @@ export const certifications = [
     proofLabel: 'View Proof',
   },
   {
-    title: 'Advanced AI Bootcamp (Grade B+)',
+    title: 'Advanced AI Bootcamp',
     issuer: 'GIK Institute & Asher Aziz Foundation · Aug 2026',
     tag: 'Certificate of Completion',
     accent: true,
