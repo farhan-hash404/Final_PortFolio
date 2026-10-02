@@ -285,9 +285,12 @@ function Lightbox({ shot, onClose }) {
     const onKey = (e) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
+    // Collapses the nav rail while open — see .lb-open in Projects.css.
+    document.body.classList.add('lb-open')
     return () => {
       window.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
+      document.body.classList.remove('lb-open')
     }
   }, [onClose])
 

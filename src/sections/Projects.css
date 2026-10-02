@@ -416,7 +416,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: min(1200px, 100%);
+  /* Hugs the image rather than forcing a fixed width, so a narrow capture
+     does not sit in a wide empty panel. */
+  max-width: min(1200px, 100%);
   max-height: 100%;
   background: var(--panel);
   border: 1px solid var(--line-2);
@@ -454,18 +456,31 @@
   border-color: var(--line-accent);
   color: var(--accent);
 }
-/* Tall page captures were clamped by max-height and letterboxed, so their
-   lower half was unreachable. The body scrolls instead: the image keeps
-   full width and every part of it can be reached. */
+/* Whole image on screen at once — no scrolling to reach the bottom. The
+   image is bounded by viewport height as well as width, so a tall capture
+   scales down to fit instead of running past the fold. */
 .lb__body {
   min-height: 0;
-  overflow: auto;
-  overscroll-behavior: contain;
+  display: flex;
+  overflow: hidden;
 }
 .lb__panel img {
   display: block;
-  width: 100%;
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: calc(92vh - 58px);
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+/* Nav rail gets out of the way while an image is open. */
+body.lb-open .rail,
+body.lb-open .railbar,
+body.lb-open .rail__scrim {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease);
 }
 
 /* The schematic is vector, so it just needs room to breathe. */
