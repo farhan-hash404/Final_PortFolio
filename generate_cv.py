@@ -31,10 +31,6 @@ class NumberedCanvas(canvas.Canvas):
         self.setFont("Helvetica", 7.0)
         self.setFillColor(colors.HexColor("#8a8a8a"))
         
-        # Header / running top line
-        # Only on page 2 and beyond, or on all pages like the original:
-        # Original has: (53.9, 806.0): "Muhammad Farhan | farhan43509@gmail.com", right aligned "Page X"
-        # Note: A4 height is ~841.89 pt. 806 pt is ~35pt from top.
         y_pos = 812
         self.drawString(54, y_pos, "Muhammad Farhan  |  farhan43509@gmail.com")
         page_text = f"Page {self._pageNumber}"
@@ -42,7 +38,6 @@ class NumberedCanvas(canvas.Canvas):
         self.restoreState()
 
 def build_pdf(filename="public/Muhammad-Farhan-CV.pdf"):
-    # Target 2 pages cleanly
     doc = SimpleDocTemplate(
         filename,
         pagesize=A4,
@@ -54,12 +49,9 @@ def build_pdf(filename="public/Muhammad-Farhan-CV.pdf"):
 
     styles = getSampleStyleSheet()
 
-    # Base colors matching original
     c_primary = colors.HexColor("#141414")
     c_section = colors.HexColor("#2f4858")
     c_sub = colors.HexColor("#4a4a4a")
-    c_link = colors.HexColor("#0d6efd") # sleek clean blue for clickable links
-    c_accent_link = colors.HexColor("#1d638f")
 
     name_style = ParagraphStyle(
         'Name',
@@ -153,59 +145,52 @@ def build_pdf(filename="public/Muhammad-Farhan-CV.pdf"):
         textColor=c_primary,
     )
 
-    proof_link_style = 'color="#0969da"; text-decoration: underline;'
-
     story = []
 
     # --- Header ---
     story.append(Paragraph("Muhammad Farhan", name_style))
     story.append(Paragraph(
-        "AI Engineer — LLMs &amp; Agentic Systems &nbsp;|&nbsp; Generative AI &nbsp;|&nbsp; Python &nbsp;|&nbsp; FastAPI",
+        "AI Engineer &mdash; LLMs &amp; Agentic Systems &middot; Generative AI &middot; Python &middot; FastAPI",
         subtitle_style
     ))
     story.append(Paragraph(
-        'Peshawar, Pakistan &nbsp;&nbsp;&nbsp;+92 334 9184114 &nbsp;&nbsp;&nbsp;'
-        '<a href="mailto:farhan43509@gmail.com" color="#2f4858">farhan43509@gmail.com</a> &nbsp;&nbsp;&nbsp;'
-        '<a href="https://github.com/farhan-hash404" color="#2f4858">github.com/farhan-hash404</a> &nbsp;&nbsp;&nbsp;'
-        '<a href="https://www.linkedin.com/in/muhammad-farhan-5164a227a/" color="#2f4858">linkedin.com/in/muhammad-farhan-5164a227a</a>',
+        'Peshawar, Pakistan &nbsp;|&nbsp; +92 334 9184114 &nbsp;|&nbsp; '
+        '<a href="mailto:farhan43509@gmail.com" color="#0969da">farhan43509@gmail.com</a> &nbsp;|&nbsp; '
+        '<a href="https://farhan-hash404.github.io/" color="#0969da">Portfolio</a> &nbsp;|&nbsp; '
+        '<a href="https://github.com/farhan-hash404" color="#0969da">GitHub</a> &nbsp;|&nbsp; '
+        '<a href="https://www.linkedin.com/in/muhammad-farhan-5164a227a/" color="#0969da">LinkedIn</a>',
         contact_style
     ))
-    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#dcdcdc"), spaceAfter=5, spaceBefore=1))
+    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
 
     # --- Professional Summary ---
     story.append(Paragraph("PROFESSIONAL SUMMARY", section_style))
+    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
     story.append(Paragraph(
-        "Computer Science graduate and self-driven AI Engineer specialising in LLMs and Agentic AI systems, with 1+ year of "
-        "hands-on experience designing and deploying multi-agent architectures using LangChain and LangGraph. Built agentic "
-        "workflows end to end — autonomous content-generation pipelines with evaluation gates, real-time conversational agents "
-        "that assess human argument, and LLM pipelines that mine community discussion into validated product specifications — "
-        "served behind production-style FastAPI endpoints. Placed <b>Top 5 in the GIKI Capstone Competition</b> (Advanced AI / "
-        "Agentic AI Bootcamp) with <b>MootCourtSimulator</b>. Grounded in classical ML and deep learning (CNNs, reinforcement learning, "
-        "predictive modelling), giving depth beneath the agentic work rather than prompt-level familiarity alone.",
+        "AI Engineer specialising in LLMs and Agentic AI systems, with 1+ year of hands-on experience and 10+ projects built &mdash; designing multi-agent architectures (LangChain, LangGraph) with real orchestration and state handoff, and serving them behind production-style FastAPI backends with Postgres, Redis, and Celery. IBM-certified in Generative AI Engineering and Top 5 of 35 at the GIKI Capstone Competition. Grounded in classical ML, deep learning, and reinforcement learning beneath the agentic work.",
         body_style
     ))
 
     # --- Technical Skills ---
     story.append(Paragraph("TECHNICAL SKILLS", section_style))
+    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
     skills_data = [
-        [Paragraph("Generative AI", skill_label_style),
-         Paragraph("LLM Integration &bull; Multi-Agent Systems &bull; Agent Orchestration &bull; Prompt Engineering &bull; LangChain &bull; LangGraph &bull; Google Gemini &bull; RAG", skill_val_style)],
-        [Paragraph("AI / ML", skill_label_style),
-         Paragraph("Predictive Modelling &bull; Classification &amp; Regression &bull; Feature Engineering &bull; Model Evaluation (Accuracy, Precision, Recall, F1, ROC-AUC) &bull; Scikit-learn &bull; Pandas &bull; NumPy &bull; Matplotlib", skill_val_style)],
-        [Paragraph("Deep Learning", skill_label_style),
-         Paragraph("CNNs &bull; NLP &bull; Neural Networks &bull; Reinforcement Learning (PPO) &bull; TensorFlow / Keras &bull; PyTorch", skill_val_style)],
-        [Paragraph("Backend &amp; APIs", skill_label_style),
-         Paragraph("FastAPI &bull; REST API Design &bull; Celery &bull; Redis &bull; Streamlit &bull; Flask", skill_val_style)],
-        [Paragraph("Web", skill_label_style),
-         Paragraph("Next.js &bull; React &bull; TypeScript &bull; Node.js &bull; Express.js &bull; JavaScript &bull; Tailwind CSS", skill_val_style)],
-        [Paragraph("Data", skill_label_style),
-         Paragraph("PostgreSQL &bull; SQLAlchemy &bull; MongoDB &bull; SQLite &bull; Qdrant", skill_val_style)],
+        [Paragraph("Generative AI / Agentic", skill_label_style),
+         Paragraph("LLM Integration &middot; Multi-Agent Systems (LangChain, LangGraph) &middot; Prompt Engineering &middot; RAG &amp; Hybrid Search &middot; Model Context Protocol (MCP) &middot; Orchestration &amp; State Handoff &middot; Human-in-the-Loop &middot; Evaluation / Guardrail Design", skill_val_style)],
+        [Paragraph("LLM Providers &amp; Infra", skill_label_style),
+         Paragraph("OpenAI &middot; Google Gemini &middot; Anthropic Claude &middot; FastAPI", skill_val_style)],
+        [Paragraph("Data &amp; Backend", skill_label_style),
+         Paragraph("PostgreSQL (SQLAlchemy 2.0, Alembic) &middot; ChromaDB &middot; REST API Design &middot; Streamlit &middot; Flask", skill_val_style)],
+        [Paragraph("Deep Learning &amp; ML", skill_label_style),
+         Paragraph("CNNs &middot; NLP &middot; Reinforcement Learning (PPO) &middot; PyTorch &middot; TensorFlow / Keras &middot; Scikit-learn &middot; Feature Engineering &middot; Model Evaluation &middot; Pandas &middot; NumPy &middot; Matplotlib &middot; Seaborn", skill_val_style)],
+        [Paragraph("Web Development", skill_label_style),
+         Paragraph("Next.js &middot; React &middot; TypeScript &middot; JavaScript &middot; Tailwind CSS", skill_val_style)],
         [Paragraph("Tools &amp; Infra", skill_label_style),
-         Paragraph("Python (Advanced) &bull; Git &amp; GitHub &bull; Docker &bull; Jupyter &bull; Vite &bull; n8n", skill_val_style)],
+         Paragraph("Python (Advanced) &middot; Git &amp; GitHub &middot; Docker / Docker Compose &middot; pytest &middot; MLflow &middot; Jupyter", skill_val_style)],
         [Paragraph("Languages", skill_label_style),
-         Paragraph("English (Professional) &bull; Urdu (Native) &bull; Pashto (Native)", skill_val_style)],
+         Paragraph("English (Professional) &middot; Urdu (Native) &middot; Pashto (Native)", skill_val_style)],
     ]
-    t = Table(skills_data, colWidths=[90, 409])
+    t = Table(skills_data, colWidths=[120, 379])
     t.setStyle(TableStyle([
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('TOPPADDING', (0,0), (-1,-1), 0.8),
@@ -216,123 +201,89 @@ def build_pdf(filename="public/Muhammad-Farhan-CV.pdf"):
     story.append(t)
     story.append(Spacer(1, 3))
 
-    # --- Featured Projects ---
-    story.append(Paragraph("FEATURED PROJECTS", section_style))
-
-    # Project 1: AI Content Factory
-    story.append(Paragraph("<b>AI Content Factory</b>", project_title_style))
-    story.append(Paragraph("Final Year Project (Team of 2) &nbsp;|&nbsp; 2025 – 2026 &nbsp;|&nbsp; Python, LangGraph, LangChain, LLMs, FastAPI, Next.js", project_meta_style))
-    story.append(Paragraph("&bull; Built an orchestrator agent that takes a single topic, searches the web for authoritative sources, synthesises the research and produces a structured content outline for downstream agents.", bullet_style))
-    story.append(Paragraph("&bull; Added a blog generation agent that drafts the full article against that research and outline, keeping output factually consistent with the sources rather than free-generating from the prompt.", bullet_style))
-    story.append(Paragraph("&bull; Gated every draft behind an evaluation agent scoring factual accuracy, source reliability, structure, readability, originality and hallucination; failing drafts loop back for regeneration until they clear the threshold.", bullet_style))
-    story.append(Paragraph("&bull; Attached generated imagery to approved articles, then wired a repurposing pipeline producing a YouTube Short, podcast, video script, X post and LinkedIn post from each one.", bullet_style))
+    # --- Professional Experience ---
+    story.append(Paragraph("PROFESSIONAL EXPERIENCE", section_style))
+    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
+    
+    story.append(Table([[Paragraph("<b>AI Engineer &middot; Capstone Programme, GIKI</b>", project_title_style), Paragraph("2026 &ndash; Present", ParagraphStyle('RightText', parent=project_title_style, alignment=2))]], colWidths=[350, 149]))
+    story.append(Paragraph("<i>Ghulam Ishaq Khan Institute of Engineering Sciences &amp; Technology, Pakistan &middot; Hybrid</i>", project_meta_style))
+    story.append(Paragraph("&bull; Building MootCourtSimulator, an AI-powered moot court platform where law students argue cases in real time against an opposing-counsel LLM agent.", bullet_style))
+    story.append(Paragraph("&bull; Developing an autonomous AI judge agent that scores argument quality, legal reasoning, and rebuttal strength with structured feedback.", bullet_style))
+    story.append(Paragraph("&bull; Architecting the multi-agent conversation flow and evaluation rubric that keep debate turns contextual and consistently graded &mdash; project selected among the Top 5 of 35 (Honorable Mention).", bullet_style))
     story.append(Spacer(1, 3))
 
-    # Project 2: MootCourtSimulator
-    honorable_mention_url = "https://raw.githubusercontent.com/farhan-hash404/Final_PortFolio/master/public/certificates/certificate-of-honorable-mention.jpg"
-    gik_completion_url = "https://raw.githubusercontent.com/farhan-hash404/Final_PortFolio/master/public/certificates/gik-advanced-ai-bootcamp-completion.jpg"
-    nv_dl_url = "https://coursera.org/verify/XHB4QTIBGXXX"
-    nv_ml_url = "https://coursera.org/verify/I5ZRELZMVZYV"
+    # --- Featured Projects ---
+    story.append(Paragraph("FEATURED PROJECTS &mdash; LLM &amp; AGENTIC SYSTEMS", section_style))
+    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
 
-    story.append(Paragraph("<b>MootCourtSimulator — AI Moot Court Simulator</b>", project_title_style))
-    story.append(Paragraph(
-        'Capstone Project, GIKI &nbsp;|&nbsp; 2026 – Present &nbsp;|&nbsp; Python, LLMs, Multi-Agent Architecture, FastAPI<br/>'
-        f'<b>Achievement:</b> Top 5 — GIKI Capstone Competition, Advanced AI / Agentic AI Bootcamp &nbsp;'
-        f'<a href="{honorable_mention_url}" color="#0969da"><b>[View Certificate &rarr;]</b></a><br/>'
-        '<a href="https://github.com/farhan-hash404/MootCourtSimulator" color="#2f4858">github.com/farhan-hash404/MootCourtSimulator</a>',
-        project_meta_style
-    ))
-    story.append(Paragraph("&bull; Built a courtroom simulation where a lawyer or law student takes the advocate role, presenting arguments, handling counterarguments and defending a position against an AI opposing counsel.", bullet_style))
-    story.append(Paragraph("&bull; Developed the opposing-counsel agent to argue the other side properly — raising relevant legal issues, challenging weak reasoning and responding in context rather than replying like a chatbot.", bullet_style))
-    story.append(Paragraph("&bull; Added an AI judge scoring legal reasoning, argument strength, evidence use and rebuttal handling against a defined rubric, returning a performance score with detailed feedback.", bullet_style))
-    story.append(Paragraph("&bull; Covered the full moot court cycle: case briefing, oral arguments, judicial questioning, rebuttals and final judgment, making practice repeatable without a human opponent.", bullet_style))
+    story.append(Paragraph("<b>MootCourtSimulator &mdash; AI Moot Court Platform &mdash; Capstone, GIKI</b>", project_title_style))
+    story.append(Paragraph('<a href="https://github.com/farhan-hash404/MootCourtSimulator" color="#0969da">GitHub</a>', project_meta_style))
+    story.append(Paragraph("<i>Stack: Python &middot; TypeScript &middot; React/Vite &middot; LangGraph &middot; FastAPI &middot; Express/Drizzle ORM &middot; PostgreSQL &middot; OpenAI (Whisper, GPT-4o, TTS) &middot; Docker</i>", project_meta_style))
+    story.append(Paragraph("&bull; Building an AI courtroom where a law student argues a live case against an AI Opposing Counsel while an AI Judge scores the reasoning against a fixed rubric (legal reasoning, argument strength, evidence use, rebuttal handling), returning a performance score with detailed feedback.", bullet_style))
+    story.append(Paragraph("&bull; Covers the full moot court cycle &mdash; case briefing, oral arguments, judicial questioning, rebuttals, and final judgment &mdash; via real-time voice streaming (Whisper transcription &rarr; GPT-4o reasoning &rarr; multi-voice TTS) on a 3-tier system (React/Vite client, Express/Drizzle API gateway, FastAPI/LangGraph AI service).", bullet_style))
+    story.append(Paragraph("&bull; Designed a Hybrid RAG pipeline over a verified 53-provision Pakistani statutory corpus (Constitution 1973, PPC 1860, CrPC 1898, QSO 1984) &mdash; dense vector search fused with BM25 via Reciprocal Rank Fusion and LLM reranking, reaching 1.00 Hit@1 on legal query benchmarks &mdash; plus deterministic citation auditing that flags fabricated provisions in real time.", bullet_style))
+    story.append(Paragraph("&bull; Built a reproducible LLMOps evaluation suite (MLflow-tracked) &mdash; 1.00 objection-decision recall, a 0/9 witness-fabrication rate, and 0/36 successful red-team prompt-injection attacks; containerised the full stack with Docker Compose.", bullet_style))
+    story.append(Spacer(1, 3))
 
+    story.append(Paragraph("<b>AI Content Factory &mdash; Multi-Agent Content Generation &amp; Evaluation System &mdash; FYP (Team of 2)</b>", project_title_style))
+    story.append(Paragraph('<a href="https://github.com/farhan-hash404/AI-Content-Factory" color="#0969da">GitHub</a>', project_meta_style))
+    story.append(Paragraph("<i>Stack: Python &middot; LangGraph &middot; LangChain &middot; FastAPI &middot; Next.js &middot; GPT-5-mini &middot; Gemini 2.5 Flash &middot; ChromaDB &middot; Tavily &middot; DeepEval</i>", project_meta_style))
+    story.append(Paragraph("&bull; Built an orchestrator agent that researches a single topic from authoritative web sources and produces a structured outline; a blog agent then drafts the full article grounded in that research, not free-generated from the prompt.", bullet_style))
+    
     story.append(PageBreak())
 
-    # --- Page 2 ---
-
-    # Project 3: Dev Signal
-    story.append(Paragraph("<b>Dev Signal — Pain-Point Discovery &amp; PRD Platform</b>", project_title_style))
-    story.append(Paragraph(
-        'Full-Stack AI Platform &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; Next.js, TypeScript, FastAPI, Google Gemini, PostgreSQL, Celery, Redis<br/>'
-        '<a href="https://github.com/farhan-hash404/Dev-Signal-" color="#2f4858">github.com/farhan-hash404/Dev-Signal-</a>',
-        project_meta_style
-    ))
-    story.append(Paragraph("&bull; Built an automated discovery pipeline replacing manual forum research: async HTTPX scrapers pull top discussions across targeted subreddits (r/webdev, r/SaaS, r/programming) and the Stack Overflow API.", bullet_style))
-    story.append(Paragraph("&bull; Designed a two-pass Gemini pipeline — pass one extracts concrete pain points with severity, sentiment and frequency; pass two turns validated pain points into targeted SaaS product ideas.", bullet_style))
-    story.append(Paragraph("&bull; Generated full Product Requirement Documents per idea covering overview, problem statement, success metrics, tiered features, tech architecture, user stories and competitor analysis.", bullet_style))
-    story.append(Paragraph("&bull; Modelled the domain in SQLAlchemy 2.0 with UUID keys across analyses, pain points, ideas, PRDs, trends and competitors, backed by PostgreSQL with Alembic migrations.", bullet_style))
-    story.append(Paragraph("&bull; Served it behind FastAPI with Celery and Redis handling long-running scrape jobs, and a Next.js dashboard with client-side fallbacks so the UI stays available when the backend is unreachable.", bullet_style))
+    story.append(Paragraph("&bull; Gated every draft behind an evaluation agent scoring factual accuracy, source reliability, structure, readability, originality, and hallucination &mdash; failing drafts loop back for regeneration until they clear the threshold (G-Eval + DeepEval, with a non-LLM citation verifier).", bullet_style))
+    story.append(Paragraph("&bull; Implemented LangGraph state handoff with SQLite/Postgres checkpointing (crashed runs resume without repeating LLM calls), a Human-in-the-Loop outline editor, and parallel section writing via Send() fan-out &mdash; verified with a reproducible ablation experiment on repetition rates.", bullet_style))
+    story.append(Paragraph("&bull; Attached generated imagery to approved articles and repurposed each into a YouTube Short, podcast, video script, X post, and LinkedIn post.", bullet_style))
     story.append(Spacer(1, 3))
 
-    # Project 4: Stick Fighter
-    story.append(Paragraph("<b>Stick Fighter — In-Browser Reinforcement Learning</b>", project_title_style))
-    story.append(Paragraph(
-        'Personal Project &nbsp;|&nbsp; 2025 &nbsp;|&nbsp; TypeScript, HTML5 Canvas, Vite, PyTorch, Gymnasium<br/>'
-        '<a href="https://github.com/farhan-hash404/Stick-Fighter" color="#2f4858">github.com/farhan-hash404/Stick-Fighter</a>',
-        project_meta_style
-    ))
-    story.append(Paragraph("&bull; Hand-rolled the entire neural network (Linear layers, manual backpropagation, Adam) with no TensorFlow.js, ONNX or WASM, shipping the game and agent in 51 KB with zero runtime dependencies.", bullet_style))
-    story.append(Paragraph("&bull; Implemented real PPO on an actor-critic MLP (46-dim observation, 2x64 tanh trunk, 15-action policy head plus value head) with GAE advantages, clipped surrogate objective, entropy bonus, gradient-norm clipping and target-KL early stopping, updating every 128 frames so learning is visible mid-fight.", bullet_style))
-    story.append(Paragraph("&bull; Solved cold start with a scripted aggression prior injected as a decaying additive logit bias that never enters the gradient, persisting learned weights to localStorage across sessions.", bullet_style))
-    story.append(Paragraph("&bull; Debugged a PPO correctness bug where behaviour and optimised policies diverged, pinning entropy at the uniform ceiling so nothing was learned despite healthy-looking metrics; the fix moved value loss 287 to 0.45 and approximate KL 0.46 to 0.003.", bullet_style))
-    story.append(Paragraph("&bull; Validated by a 42-check headless suite running the shipped code: with the scripted prior stripped, rounds won improved 11/12 to 12/12 and frames-to-win 619 to 258.", bullet_style))
+    story.append(Paragraph("<b>Dev Signal &mdash; AI-Powered SaaS Market-Research &amp; PRD Generator &mdash; Full-Stack AI Platform</b>", project_title_style))
+    story.append(Paragraph('<a href="https://github.com/farhan-hash404/Dev-Signal-" color="#0969da">GitHub</a>', project_meta_style))
+    story.append(Paragraph("<i>Stack: Next.js 16 &middot; TypeScript &middot; FastAPI &middot; Gemini (2-pass) &middot; PostgreSQL (SQLAlchemy 2.0, Alembic) &middot; Celery &middot; Redis &middot; Docker Compose</i>", project_meta_style))
+    story.append(Paragraph("&bull; Built an automated discovery pipeline &mdash; async HTTPX scrapers pull top discussions across r/webdev, r/SaaS, r/programming, and the Stack Overflow API.", bullet_style))
+    story.append(Paragraph("&bull; Designed a two-pass Gemini pipeline &mdash; Pass 1 extracts concrete pain points with severity, sentiment, and frequency; Pass 2 turns validated ones into 3&ndash;5 targeted SaaS product ideas per run, each with a full PRD (overview, problem statement, success metrics, tiered features, tech architecture, user stories, competitor analysis).", bullet_style))
+    story.append(Paragraph("&bull; Modelled the domain in SQLAlchemy 2.0 with UUID keys and Alembic migrations; served it behind FastAPI with Celery and Redis for long scrape jobs, and a Next.js 16 dashboard with client-side fallbacks so the UI stays up when the backend is unreachable.", bullet_style))
     story.append(Spacer(1, 3))
 
-    # Project 5: Kidney Disease Classification
-    story.append(Paragraph("<b>Kidney Disease Classification</b>", project_title_style))
-    story.append(Paragraph(
-        'Deep Learning / Computer Vision &nbsp;|&nbsp; 2025 &nbsp;|&nbsp; Python, TensorFlow / Keras, CNN, NumPy, Matplotlib<br/>'
-        '<a href="https://github.com/farhan-hash404/Kidney-Disease-Classification" color="#2f4858">github.com/farhan-hash404/Kidney-Disease-Classification</a>',
-        project_meta_style
-    ))
-    story.append(Paragraph("&bull; Trained a Convolutional Neural Network to classify kidney disease from medical scan images, covering the full pipeline from image preprocessing and augmentation through training and evaluation.", bullet_style))
-    story.append(Paragraph("&bull; Tuned architecture and hyperparameters, benchmarking with accuracy, precision, recall and confusion-matrix analysis to reduce false negatives on clinical-style data.", bullet_style))
+    story.append(Paragraph("DEEP LEARNING &amp; REINFORCEMENT LEARNING", section_style))
+    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
+
+    story.append(Paragraph("<b>Stick Fighter &mdash; Live In-Browser Reinforcement Learning Game</b>", project_title_style))
+    story.append(Paragraph('<a href="https://farhan-hash404.github.io/Stick-Fighter" color="#0969da">Live Demo</a>', project_meta_style))
+    story.append(Paragraph("<i>Stack: TypeScript &middot; HTML5 Canvas &middot; Vite &middot; PPO &middot; PyTorch &middot; Gymnasium</i>", project_meta_style))
+    story.append(Paragraph("&bull; Built a 2D fighting game whose opponent isn't scripted or pre-trained &mdash; it runs PPO live in the browser, learning from the player mid-fight; hand-rolled the network (manual backprop, Adam) with no TensorFlow.js, ONNX, or WASM, in a 51 KB bundle (17 KB gzipped).", bullet_style))
+    story.append(Paragraph("&bull; Implemented real PPO on an actor-critic MLP (46-dim observation &rarr; 2&times;64 tanh trunk &rarr; 15-action policy head + value head) with GAE(&lambda;), clipped surrogate objective, entropy bonus, grad-norm clipping, and target-KL early stopping, updating every 128 frames, with a decaying scripted prior to solve cold start.", bullet_style))
+    story.append(Paragraph("&bull; Debugged a PPO correctness bug where entropy stayed pinned at the uniform ceiling (ln 15) &mdash; the fix moved value loss 287 &rarr; 0.45 and approx-KL 0.46 &rarr; 0.003; also found and fixed a frame-data exploit in the fight engine.", bullet_style))
+    story.append(Paragraph("&bull; With the scripted prior stripped, the learned agent won 12/12 rounds (vs. 11/12) in 258 frames (vs. 619) with 91 HP remaining (vs. 43), verified by a 43-check headless test suite.", bullet_style))
     story.append(Spacer(1, 3))
 
-    # Project 6: Wine Quality Analysis
-    story.append(Paragraph("<b>Wine Quality Analysis</b>", project_title_style))
-    story.append(Paragraph(
-        'Machine Learning / Data Analysis &nbsp;|&nbsp; Python, Pandas, Scikit-learn, Matplotlib<br/>'
-        '<a href="https://github.com/farhan-hash404/Wine-Quality-Analysis" color="#2f4858">github.com/farhan-hash404/Wine-Quality-Analysis</a>',
-        project_meta_style
-    ))
-    story.append(Paragraph("&bull; Performed exploratory analysis over physicochemical wine measurements, covering feature correlation, distribution analysis and outlier handling.", bullet_style))
-    story.append(Paragraph("&bull; Built and compared classification models for quality scoring, evaluating with accuracy, precision, recall and confusion-matrix analysis.", bullet_style))
+    story.append(Paragraph("OTHER ML PROJECTS", section_style))
+    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
+    story.append(Paragraph("&bull; Customer Churn Prediction (Scikit-learn) &middot; URL Phishing Detection &middot; House Price Regression &mdash; models with full evaluation pipelines covering feature engineering, preprocessing, and metrics (accuracy, precision, recall, ROC-AUC, RMSE/R&sup2;).", bullet_style))
     story.append(Spacer(1, 3))
 
-    # --- Education ---
     story.append(Paragraph("EDUCATION", section_style))
-    story.append(Paragraph("<b>BS Computer Science</b>", project_title_style))
-    story.append(Paragraph("University of Peshawar, Pakistan &nbsp;|&nbsp; 2022 – 2026", project_meta_style))
+    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
+    story.append(Table([[Paragraph("<b>BS Computer Science &middot; University of Peshawar, Pakistan</b>", project_title_style), Paragraph("2022 &ndash; 2026", ParagraphStyle('RightText', parent=project_title_style, alignment=2))]], colWidths=[400, 99]))
     story.append(Paragraph("&bull; All 8 semesters completed; degree awaiting official conferral. Available for full-time roles immediately.", bullet_style))
-    story.append(Paragraph("&bull; Relevant coursework: Machine Learning, Deep Learning, Data Structures &amp; Algorithms, Databases, Software Engineering.", bullet_style))
-    story.append(Paragraph("&bull; Final Year Project: AI Content Factory — multi-agent content generation with an evaluation gate.", bullet_style))
+    story.append(Paragraph("&bull; Relevant coursework: Machine Learning &middot; Deep Learning &middot; Data Structures &amp; Algorithms &middot; Databases &middot; Software Engineering.", bullet_style))
+    story.append(Paragraph("&bull; Final Year Project: AI Content Factory &mdash; multi-agent blog generation system using LLM agent orchestration (LangGraph).", bullet_style))
     story.append(Spacer(1, 3))
 
-    # --- Certifications & Training ---
     story.append(Paragraph("CERTIFICATIONS &amp; TRAINING", section_style))
-
+    story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
+    
     cert_items = [
-        f'<b>Certificate of Honorable Mention — Top 5</b> (Project: "MootCourtSimulator", out of 35 projects) &bull; GIK Institute &amp; Asher Aziz Foundation (Aug 2026) &nbsp;<a href="{honorable_mention_url}" color="#0969da"><b>[View Proof &rarr;]</b></a>',
-        f'<b>Certificate of Completion — Advanced AI Bootcamp</b> (Grade B+) &bull; GIK Institute &amp; Asher Aziz Foundation (Aug 2026) &nbsp;<a href="{gik_completion_url}" color="#0969da"><b>[View Proof &rarr;]</b></a>',
-        f'<b>Fundamentals of Deep Learning</b> &bull; NVIDIA / Whizlabs (Offered via Coursera, Jun 2026) &nbsp;<a href="{nv_dl_url}" color="#0969da"><b>[Verify Coursera &rarr;]</b></a>',
-        f'<b>Fundamentals of Machine Learning</b> &bull; NVIDIA / Whizlabs (Offered via Coursera, Jun 2026) &nbsp;<a href="{nv_ml_url}" color="#0969da"><b>[Verify Coursera &rarr;]</b></a>',
-        '<b>MERN Stack Development</b> &bull; NAVTTC (National Vocational &amp; Technical Training Commission)',
-        '<b>Web and App Development</b> &bull; Saylani Mass IT Training (SMIT)',
+        'IBM Generative AI Engineering Professional Certificate (16 courses) &mdash; IBM &middot; Coursera &middot; Sep 2026 &nbsp;<a href="https://coursera.org/verify/professional-cert/S0S7Y8N3L4E2" color="#0969da">Verify Certificate</a>',
+        'IBM Introduction to Computer Vision and Image Processing &mdash; IBM &middot; Coursera &middot; Sep 2026 &nbsp;<a href="https://coursera.org/verify/I5ZRELZMVZYV" color="#0969da">Verify Certificate</a>',
+        'Top 5 Honorable Mention &mdash; GIKI Capstone Competition (MootCourtSimulator), Asher Aziz Foundation &middot; Aug 2026 &nbsp;<a href="https://raw.githubusercontent.com/farhan-hash404/Final_PortFolio/master/public/certificates/certificate-of-honorable-mention.jpg" color="#0969da">View Certificate</a>',
+        'Advanced AI Bootcamp (Grade B+) &mdash; GIK Institute &amp; Asher Aziz Foundation &middot; Aug 2026 &nbsp;<a href="https://raw.githubusercontent.com/farhan-hash404/Final_PortFolio/master/public/certificates/gik-advanced-ai-bootcamp-completion.jpg" color="#0969da">View Certificate</a>',
+        'MERN Stack Development (Grade A+) &mdash; NAVTTC &middot; Prime Minister\'s Youth Skills Development Program &nbsp;<a href="https://raw.githubusercontent.com/farhan-hash404/Final_PortFolio/master/public/certificates/navttc-mern-stack-development.jpg" color="#0969da">View Certificate</a>',
+        'Web and App Development &mdash; Saylani Mass IT Training (SMIT) &nbsp;<a href="https://raw.githubusercontent.com/farhan-hash404/Final_PortFolio/master/public/certificates/saylani-web-and-mobile-app-development.jpg" color="#0969da">View Certificate</a>',
+        'Fundamentals of Deep Learning &middot; Fundamentals of Machine Learning &mdash; NVIDIA (Coursera)',
     ]
     for c_item in cert_items:
         story.append(Paragraph(f"&bull; {c_item}", bullet_style))
-
-    story.append(Spacer(1, 3))
-
-    # --- Career Focus ---
-    story.append(Paragraph("CAREER FOCUS", section_style))
-    story.append(Paragraph(
-        "Actively pursuing AI/ML Engineer roles with a focus on Generative AI and Agentic AI systems. "
-        "Planning postgraduate specialisation in GenAI and Agentic AI.",
-        body_style
-    ))
 
     doc.build(story, canvasmaker=NumberedCanvas)
     print(f"Built {filename} successfully.")
