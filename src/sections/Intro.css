@@ -53,6 +53,7 @@
 
 /* ---------- badge ---------- */
 .intro__badge {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 11px;
@@ -75,6 +76,35 @@
 .intro__badge:hover {
   border-color: rgba(217, 242, 39, 0.55);
   transform: translateY(-2px);
+}
+
+/* Very light glowing boundary — a pulsing ring sitting on the border,
+   kept off the badge itself so the hover translate never jitters it. */
+.intro__badgeGlow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(217, 242, 39, 0.25);
+  animation: badgeGlow 3.2s ease-in-out infinite;
+}
+@keyframes badgeGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(217, 242, 39, 0.18),
+      0 0 7px 0 rgba(217, 242, 39, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(217, 242, 39, 0.4),
+      0 0 16px 1px rgba(217, 242, 39, 0.26);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro__badgeGlow {
+    animation: none;
+  }
 }
 .intro__badge strong {
   color: var(--accent);
@@ -105,11 +135,45 @@
 }
 
 /* ---------- headline ---------- */
+/* Name sits left, portrait right. Text column is allowed to shrink
+   (minmax 0) so a long name can't push the portrait off the grid. */
+.intro__lead {
+  display: grid;
+  /* Columns and gap match .intro__mid exactly, so the portrait's column
+     sits directly above the LLMOps card's column. */
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  align-items: start;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+.intro__portrait {
+  margin: 20px 0 0;
+  justify-self: center;
+  width: clamp(132px, 16.5vw, 208px);
+  aspect-ratio: 1;
+  flex-shrink: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+  background: var(--panel);
+  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.75);
+}
+.intro__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .intro__h1 {
   margin-top: 28px;
-  font-size: clamp(30px, 3.7vw, 46px);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  /* Bigger and heavier than before — at 46px/700 against the tagline
+     directly under it the name was not reading as the primary element. */
+  font-size: clamp(34px, 4.7vw, 60px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink);
 }
 
 /* Supporting line under the name — deliberately smaller than the name
@@ -171,11 +235,11 @@
 }
 
 /* focus card */
-.intro__focus {
+.intro__now {
   padding: 16px 17px 18px;
 }
 
-.intro__focusHead {
+.intro__nowHead {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -183,61 +247,78 @@
   padding-bottom: 13px;
   border-bottom: 1px solid var(--line);
 }
-.intro__focusHead .mono {
+.intro__nowHead .mono {
   display: inline-flex;
   align-items: center;
   gap: 7px;
   font-size: 9.5px;
   color: var(--ink-2);
 }
-.intro__focusHint {
+.intro__nowHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent);
 }
-
-.intro__bars {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 16px;
+.intro__nowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(217, 242, 39, 0.5);
+  animation: nowPulse 2s ease-out infinite;
+}
+@keyframes nowPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 242, 39, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(217, 242, 39, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 242, 39, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro__nowDot {
+    animation: none;
+  }
 }
 
-.intro__barTop {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 7px;
+.intro__nowTitle {
+  margin-top: 16px;
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+}
+.intro__nowBody {
+  margin-top: 10px;
   font-size: 12.5px;
+  line-height: 1.55;
   color: var(--ink-2);
 }
-.intro__barVal {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: var(--ink-4);
-}
 
-.intro__barTrack {
-  height: 4px;
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 99px;
-  overflow: hidden;
+.intro__nowTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
 }
-.intro__barTrack i {
-  display: block;
-  width: 0;
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent-dim), var(--accent));
-  border-radius: 99px;
-  transition: width 1.1s var(--ease);
-  transition-delay: var(--d);
-}
-.reveal.is-in .intro__barTrack i,
-.is-in .intro__barTrack i {
-  width: var(--w);
+.intro__nowTags span {
+  padding: 4px 10px;
+  border: 1px solid var(--line-accent);
+  border-radius: 999px;
+  background: rgba(217, 242, 39, 0.06);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: var(--accent);
 }
 
 /* ---------- proof strip ---------- */
@@ -286,7 +367,7 @@
   .intro__mid {
     grid-template-columns: 1fr;
   }
-  .intro__focus {
+  .intro__now {
     max-width: 420px;
   }
 }
@@ -311,8 +392,21 @@
     padding: 12px;
     gap: 8px;
   }
+  /* Portrait moves above the name on a phone and shrinks — side by side
+     it would leave the name only ~55% of a 375px row. */
+  .intro__lead {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .intro__portrait {
+    order: -1;
+    width: 116px;
+    margin-top: 24px;
+    border-radius: 12px;
+  }
   .intro__h1 {
-    font-size: clamp(28px, 8vw, 34px);
+    margin-top: 18px;
+    font-size: clamp(30px, 8.6vw, 38px);
   }
   .intro__tagline {
     max-width: none;

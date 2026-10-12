@@ -54,25 +54,41 @@ export default function Intro({ onOpenEmail }) {
         <span>
           {hero.badge.text} <strong>{hero.badge.highlight}</strong> {hero.badge.tail}
         </span>
+        <span className="intro__badgeGlow" aria-hidden="true" />
         <span className="intro__badgeBtn">
           {hero.badge.action.label}
           <Icon name="arrowUpRight" size={12} />
         </span>
       </a>
 
-      {/* ---- name + tagline ---- */}
-      <h1 className="intro__h1 reveal" style={{ '--reveal-delay': '110ms' }}>
-        {profile.name}
-      </h1>
+      {/* ---- name + tagline, portrait alongside ---- */}
+      <div className="intro__lead">
+        <div className="intro__leadText">
+          <h1 className="intro__h1 reveal" style={{ '--reveal-delay': '110ms' }}>
+            {profile.name}
+          </h1>
 
-      <p className="intro__tagline reveal" style={{ '--reveal-delay': '150ms' }}>
-        {hero.tagline[0]} <span className="intro__hl">{hero.tagline[1]}</span>{' '}
-        {hero.tagline[2]}
-      </p>
+          <p className="intro__tagline reveal" style={{ '--reveal-delay': '150ms' }}>
+            {hero.tagline[0]} <span className="intro__hl">{hero.tagline[1]}</span>{' '}
+            {hero.tagline[2]}
+          </p>
 
-      <p className="intro__sub reveal" style={{ '--reveal-delay': '190ms' }}>
-        {hero.subline}
-      </p>
+          <p className="intro__sub reveal" style={{ '--reveal-delay': '190ms' }}>
+            {hero.subline}
+          </p>
+        </div>
+
+        <figure className="intro__portrait reveal" style={{ '--reveal-delay': '140ms' }}>
+          <img
+            src="/portrait.jpg"
+            alt={`${profile.name} — ${profile.role}`}
+            width="640"
+            height="640"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
+      </div>
 
       {/* ---- points + focus card ---- */}
       <div className="intro__mid">
@@ -93,28 +109,26 @@ export default function Intro({ onOpenEmail }) {
         </div>
 
         <div
-          className="intro__focus card spotlight reveal"
+          className="intro__now card spotlight reveal"
           style={{ '--reveal-delay': '260ms' }}
           {...spot}
         >
-          <div className="intro__focusHead">
+          <div className="intro__nowHead">
             <span className="mono">
-              <Icon name="chart" size={12} /> {hero.focusCard.title}
+              <Icon name="spark" size={12} /> {hero.nowCard.kicker}
             </span>
-            <span className="intro__focusHint">{hero.focusCard.hint}</span>
+            <span className="intro__nowHint">
+              <i className="intro__nowDot" aria-hidden="true" />
+              {hero.nowCard.hint}
+            </span>
           </div>
 
-          <div className="intro__bars">
-            {hero.focusCard.bars.map((b, i) => (
-              <div className="intro__bar" key={b.label}>
-                <div className="intro__barTop">
-                  <span>{b.label}</span>
-                  <span className="intro__barVal">{b.value}%</span>
-                </div>
-                <div className="intro__barTrack">
-                  <i style={{ '--w': `${b.value}%`, '--d': `${i * 120 + 200}ms` }} />
-                </div>
-              </div>
+          <h3 className="intro__nowTitle">{hero.nowCard.title}</h3>
+          <p className="intro__nowBody">{hero.nowCard.body}</p>
+
+          <div className="intro__nowTags">
+            {hero.nowCard.tags.map((t) => (
+              <span key={t}>{t}</span>
             ))}
           </div>
         </div>

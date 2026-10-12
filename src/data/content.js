@@ -34,9 +34,9 @@ export const sections = [
 export const hero = {
   badge: {
     icon: 'trophy',
-    text: 'MootCourtSimulator —',
-    highlight: 'Selected among Top 5',
-    tail: '· GIKI Capstone Competition (out of 35 projects)',
+    text: '',
+    highlight: 'Top 5',
+    tail: '· GIKI Capstone Competition',
     action: {
       label: 'View',
       href: '/certificates/certificate-of-honorable-mention.jpg',
@@ -67,14 +67,12 @@ export const hero = {
     { icon: 'rocket', text: '10+ projects built' },
     { icon: 'trophy', text: 'Top 5 · MootCourtSimulator' },
   ],
-  focusCard: {
-    title: 'Where I go deep',
-    hint: 'Live snapshot',
-    bars: [
-      { label: 'Agentic AI · LangGraph', value: 92 },
-      { label: 'Python · FastAPI', value: 88 },
-      { label: 'Deep Learning · TensorFlow', value: 78 },
-    ],
+  nowCard: {
+    kicker: 'What I am working on',
+    hint: 'Active now',
+    title: 'LLMOps',
+    body: 'Taking agent systems from notebook to production — evaluation harnesses, observability, and deployment pipelines for LLMs.',
+    tags: ['Evaluation', 'Observability', 'CI/CD for LLMs'],
   },
 }
 
