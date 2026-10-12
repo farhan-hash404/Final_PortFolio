@@ -101,10 +101,44 @@ export default function Intro({ onOpenEmail }) {
             ))}
           </ul>
           
-          <div className="reveal" style={{ '--reveal-delay': '230ms', marginTop: '28px', paddingLeft: '20px' }}>
+          <div
+            className="intro__actions reveal"
+            style={{ '--reveal-delay': '230ms', marginTop: '28px', paddingLeft: '20px' }}
+          >
             <Button variant="quiet" icon="download" href={profile.cv} download>
               Download CV
             </Button>
+
+            <div className="intro__socials">
+              <a
+                className="intro__social"
+                href={profile.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                data-cursor="link"
+              >
+                <Icon name="github" size={17} />
+              </a>
+              <a
+                className="intro__social"
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                data-cursor="link"
+              >
+                <Icon name="linkedin" size={17} />
+              </a>
+              <a
+                className="intro__social"
+                href={`mailto:${profile.email}`}
+                aria-label="Email"
+                data-cursor="link"
+              >
+                <Icon name="mail" size={17} />
+              </a>
+            </div>
           </div>
         </div>
 
