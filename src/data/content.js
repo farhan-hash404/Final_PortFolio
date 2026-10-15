@@ -82,10 +82,12 @@ export const summary =
 /* Marquee ticker above the project showcase */
 export const marqueeTags = [
   'LANGGRAPH',
+  'RAG',
   'LANGCHAIN',
   'FASTAPI',
   'LLMS',
   'MULTI-AGENT',
+  'CROSS-ENCODER',
   'TENSORFLOW',
   'PYTHON',
   'SCIKIT-LEARN',
@@ -95,8 +97,59 @@ export const marqueeTags = [
 
 export const featuredProjects = [
   {
-    id: 'content-factory',
+    id: 'trichorag',
     index: '01',
+    title: 'TrichoRAG',
+    kicker: 'EVIDENCE RAG · AGENTS · CLINICAL SAFETY',
+    meta: 'Evidence-Grounded Scalp Assistant',
+    period: '2026',
+    repo: 'https://github.com/farhan-hash404/TrichoRAG',
+    live: true,
+    actions: [
+      { label: 'Live Demo', href: 'https://tricho-rag.vercel.app/', icon: 'external' },
+      { label: 'GitHub', href: 'https://github.com/farhan-hash404/TrichoRAG', icon: 'github' },
+    ],
+    tagline:
+      'An evidence-grounded hair & scalp assistant: answers only from scraped, openly licensed medical literature, audits every sentence against cited passages, and withholds anything unverified.',
+    stack: [
+      'Python',
+      'LangGraph',
+      'RAG',
+      'ChromaDB',
+      'Cross-Encoder',
+      'FastAPI',
+      'Next.js',
+      'TypeScript',
+      'Docker',
+      'pytest',
+    ],
+    visual: 'trichorag',
+    /* Deep clinical sage/forest gradient that contrasts beautifully with
+       the eggshell/parchment screenshots. */
+    tint: 'linear-gradient(140deg, #2a5245, #122821)',
+    shots: [
+      { src: '/shots/trichorag/01-overview.jpg', label: 'Overview' },
+      { src: '/shots/trichorag/02-evidence.jpg', label: 'Evidence Q&A' },
+      { src: '/shots/trichorag/03-assessment.jpg', label: 'Tone calibration' },
+      { src: '/shots/trichorag/04-shedding.jpg', label: 'Shedding tracker' },
+      { src: '/shots/trichorag/05-timeline.jpg', label: 'Scan timeline' },
+    ],
+    short: [
+      'Retrieval-first architecture over scraped NHS, MedlinePlus, NIAMS and Europe PMC literature with hybrid BM25 + ONNX dense search and local cross-encoder re-ranking (Hit@1 0.915, MRR@10 0.957).',
+      'Deterministic citation auditor checks every sentence before display — fabricated citations or uncited medical claims are withheld rather than shown, guarded by 149 clinical/retrieval invariant tests.',
+    ],
+    highlights: [
+      'Built an evidence-grounded medical retrieval pipeline over a scraped 56-document / 1,077-chunk corpus (NHS, MedlinePlus, NIAMS, DailyMed, Europe PMC) with robots.txt compliance, rate-limiting, and indirect injection sanitisation.',
+      'Designed hybrid retrieval fusing ChromaDB dense embeddings (ONNX all-MiniLM-L6-v2, 384-d) with BM25 via Reciprocal Rank Fusion, followed by an int8 cross-encoder re-ranker achieving Hit@3 1.000 and Hit@1 0.915 (up from 0.830).',
+      'Implemented calibrated joint abstention (AUROC 1.000 separating in-scope from out-of-scope queries) that refuses to guess when the corpus lacks bearing evidence.',
+      'Engineered a deterministic citation auditor that validates each generated sentence against cited source text; responses with uncited medical claims, phantom drug names, or fabricated numbers are withheld.',
+      'Constructed pre-model safety guardrails catching prompt injection, dosage requests, diagnosis attempts, and emergencies, plus a LangGraph Q&A graph with extractive verbatim fallback that cannot hallucinate.',
+      'Locked down clinical invariants with 149 backend pytest tests (DB CHECK constraints preventing prescription generation, referral enforcement on red flags, audit verification), an MCP server, and MLflow evaluation tracking.',
+    ],
+  },
+  {
+    id: 'content-factory',
+    index: '02',
     title: 'AI Content Factory',
     kicker: 'GENERATIVE AI · MULTI-AGENT · FYP',
     meta: 'Final Year Project · Team of 2',
@@ -135,7 +188,7 @@ export const featuredProjects = [
   },
   {
     id: 'mootcourt-simulator',
-    index: '02',
+    index: '03',
     title: 'MootCourtSimulator',
     kicker: 'LEGAL AI · MOOT COURT SIM · CAPSTONE',
     meta: 'Capstone Project · GIKI',
@@ -173,7 +226,7 @@ export const featuredProjects = [
   },
   {
     id: 'dev-signal',
-    index: '03',
+    index: '04',
     title: 'Dev Signal',
     kicker: 'LLM PIPELINE · SAAS · MARKET RESEARCH',
     meta: 'Full-Stack AI Platform',
@@ -212,7 +265,7 @@ export const featuredProjects = [
   },
   {
     id: 'stick-fighter',
-    index: '04',
+    index: '05',
     title: 'Stick Fighter',
     kicker: 'REINFORCEMENT LEARNING · PPO · TYPESCRIPT',
     meta: 'Personal Project',
@@ -248,22 +301,52 @@ export const featuredProjects = [
       'Found a frame-data exploit in the fight engine — heavy attacks commit for 16 frames but only activate a hitbox at frame 8, so 7-frame jabs cancel them via hitstun — and rewrote the AI move priority around it, alongside fixes to shield immunity and order-dependent simultaneous-attack resolution.',
     ],
   },
+  {
+    id: 'kidneyvision',
+    index: '06',
+    title: 'KidneyVision',
+    kicker: 'MEDICAL AI · DEEP LEARNING · FULL-STACK',
+    meta: 'Diagnostic Platform',
+    period: '2025 – 2026',
+    repo: 'https://github.com/farhan-hash404/Kidney-Disease-Classification',
+    actions: [
+      {
+        label: 'GitHub',
+        href: 'https://github.com/farhan-hash404/Kidney-Disease-Classification',
+        icon: 'github',
+      },
+    ],
+    tagline:
+      'A four-class renal CT classifier — fine-tuned VGG16 plus ROI-masked radiomics behind a FastAPI backend, wrapped in a clinical studio that logs every scan to history and analytics.',
+    stack: ['Python', 'TensorFlow', 'VGG16', 'FastAPI', 'React', 'SQLAlchemy'],
+    visual: 'kidneyvision',
+    /* Emerald into deep green — the clinical studio's own accent, so the
+       light screenshots read as their own product in the strip. */
+    tint: 'linear-gradient(140deg, #3fae84, #15503a)',
+    shots: [
+      { src: '/shots/kidneyvision/01-classification.jpg', label: 'Classification' },
+      { src: '/shots/kidneyvision/02-history.jpg', label: 'Prediction history' },
+      { src: '/shots/kidneyvision/03-analytics.jpg', label: 'Analytics' },
+    ],
+    short: [
+      'Upload a renal CT frame and a fine-tuned VGG16 sorts it across Normal, Kidney Tumor, Cyst, and Kidney Stone, backed by an ROI-masked radiomic scorer reading Hounsfield density cues.',
+      'Every prediction is persisted behind FastAPI — a searchable history of findings and an analytics dashboard summarising confidence and prevalence across all logged scans.',
+    ],
+    highlights: [
+      'Built a 4-class renal CT classifier on a fine-tuned VGG16 convolutional network, differentiating Normal, Kidney Tumor, Cyst, and Kidney Stone scans with per-class probability output.',
+      'Backed the deep model with an ROI-masked radiomic scorer reading Hounsfield density cues — calcification spikes above ~210 for stones, hypo-dense fluid voids below ~60 for cysts, and soft-tissue mass with high edge-gradient variance for tumours.',
+      'Served inference behind a FastAPI backend with Pydantic v2 validation and SQLAlchemy 2.0, persisting every scan — finding, confidence, and notes — to the database.',
+      'Built a React + Tailwind clinical studio: drag-and-drop upload, preset test-set samples, per-class probability meters, a searchable prediction history, and an analytics dashboard of confidence and finding prevalence.',
+      'Wired a one-command launcher that brings up both the FastAPI API (Swagger docs, health check) and the Vite React UI together for local runs.',
+    ],
+  },
 ]
 
 /* Revealed by the "See more" toggle under the featured showcase. */
 export const sideProjects = [
   {
-    id: 'kidney-cnn',
-    index: '05',
-    title: 'Kidney Disease Classification',
-    kicker: 'DEEP LEARNING · COMPUTER VISION',
-    repo: 'https://github.com/farhan-hash404/Kidney-Disease-Classification',
-    body: 'A CNN trained to classify kidney disease from medical scan images — the full pipeline from preprocessing and augmentation through to evaluation, tuned to reduce false negatives on clinical-style data.',
-    stack: ['Python', 'TensorFlow', 'Keras', 'CNN'],
-  },
-  {
     id: 'wine-quality',
-    index: '06',
+    index: '07',
     title: 'Wine Quality Analysis',
     kicker: 'MACHINE LEARNING · DATA ANALYSIS',
     repo: 'https://github.com/farhan-hash404/Wine-Quality-Analysis',

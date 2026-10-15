@@ -692,13 +692,244 @@ function ChurnVisual() {
   )
 }
 
+/* ------------------------------------------------------------------ */
+/* 05 — KidneyVision: dual-engine CT classifier + radiomic density      */
+/* ------------------------------------------------------------------ */
+function KidneyVisual() {
+  // Hounsfield density bands the radiomic scorer reads, per class. The bar
+  // fill tracks the band — ascending density, not a probability — so the
+  // panel teaches the actual rule rather than restating a 100/0/0/0 softmax.
+  const bands = [
+    { label: 'CYST', v: 0.15, hu: '15–60' },
+    { label: 'NORMAL', v: 0.33, hu: '60–110' },
+    { label: 'KIDNEY TUMOR', v: 0.6, hu: '110–195', hot: true },
+    { label: 'KIDNEY STONE', v: 0.88, hu: '>210' },
+  ]
+
+  return (
+    <Frame
+      w={560}
+      h={400}
+      label="KidneyVision dual-engine CT classifier: a renal CT frame passes through a fine-tuned VGG16 CNN and an ROI-masked radiomic scorer, fused into a four-class finding, with Hounsfield density bands and a result persisted behind FastAPI for history and analytics"
+    >
+      <text x="22" y="26" className="pv__cap">
+        DUAL-ENGINE CT CLASSIFICATION
+      </text>
+
+      {/* rails: CT frame fans into both engines, which fuse into the softmax */}
+      <Wire d="M140 96 H 160 V 72 H 180" />
+      <Wire d="M140 96 H 160 V 140 H 180" />
+      <Wire d="M332 72 H 352 V 104 H 372" />
+      <Wire d="M332 140 H 352 V 104" />
+
+      <Node x="22" y="70" w="118" h="52" title="CT Scan" sub="renal CT frame" />
+      <Node x="180" y="48" w="152" h="48" title="VGG16 CNN" sub="fine-tuned · deep" hot />
+      <Node x="180" y="116" w="152" h="48" title="CT Radiomics" sub="ROI-masked" />
+      <Node x="372" y="80" w="150" h="48" title="4-class Softmax" sub="fused finding" hot />
+
+      {/* one frame travelling obs → engine → fused finding */}
+      <Packet track="M140 96 H 160 V 72 H 352 V 104 H 372" />
+
+      <line x1="22" x2="538" y1="190" y2="190" stroke="rgba(255,255,255,.08)" />
+
+      {/* ---- radiomic density bands (left) ---- */}
+      <text x="22" y="214" className="pv__cap">
+        RADIOMIC DENSITY · HOUNSFIELD BANDS
+      </text>
+      {bands.map((b, i) => (
+        <g key={b.label} transform={`translate(22 ${226 + i * 27})`}>
+          <text x="0" y="9" className="pv__s">
+            {b.label}
+          </text>
+          <rect x="128" y="2" width="160" height="7" rx="3.5" fill="rgba(255,255,255,.07)" />
+          <rect
+            x="128"
+            y="2"
+            height="7"
+            rx="3.5"
+            fill="#d9f227"
+            className="pv__bar"
+            style={{ '--w': `${160 * b.v}px`, animationDelay: `${i * 0.16}s`, opacity: b.hot ? 1 : 0.55 }}
+          />
+          <text x="298" y="9" className="pv__s" style={b.hot ? { fill: '#d9f227' } : null}>
+            {b.hu}
+          </text>
+        </g>
+      ))}
+
+      {/* ---- the finding + persistence (right) ---- */}
+      <rect
+        x="416"
+        y="212"
+        width="118"
+        height="118"
+        rx="10"
+        fill="rgba(217,242,39,.08)"
+        stroke="rgba(217,242,39,.32)"
+      />
+      <text x="475" y="252" className="pv__big" textAnchor="middle">
+        100%
+      </text>
+      <text x="475" y="270" className="pv__s" textAnchor="middle">
+        CONFIDENCE
+      </text>
+      <text x="475" y="296" className="pv__s" textAnchor="middle" style={{ fill: '#d9f227' }}>
+        KIDNEY TUMOR
+      </text>
+      <text x="475" y="314" className="pv__s" textAnchor="middle">
+        LOGGED TO DB
+      </text>
+
+      <text x="22" y="356" className="pv__s">
+        SERVED BEHIND FASTAPI · SQLALCHEMY 2.0 PERSISTENCE
+      </text>
+      <text x="22" y="374" className="pv__s">
+        EVERY SCAN → SEARCHABLE HISTORY + ANALYTICS DASHBOARD
+      </text>
+    </Frame>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* 01 — TrichoRAG: evidence-grounded RAG & deterministic auditor      */
+/* ------------------------------------------------------------------ */
+function TrichoVisual() {
+  const metrics = [
+    { label: 'HIT@1 (CROSS-ENCODER)', v: 0.915 },
+    { label: 'HIT@3 (CLINICAL + LAY)', v: 1.0 },
+    { label: 'MRR@10 (HYBRID RANK)', v: 0.957 },
+    { label: 'ABSTAIN AUROC', v: 1.0 },
+  ]
+
+  return (
+    <Frame
+      w={560}
+      h={400}
+      label="TrichoRAG evidence-grounded hair & scalp assistant: deterministic guardrails, hybrid dense and BM25 retrieval, int8 cross-encoder re-ranking, and sentence-level citation auditor withholding unverified claims"
+      caption="trichorag-pipeline"
+      foot={['deterministic guardrails', 'hybrid + cross-encoder', 'citation auditor']}
+    >
+      <text x="22" y="26" className="pv__cap">
+        EVIDENCE-GROUNDED RAG & DETERMINISTIC AUDITOR
+      </text>
+
+      {/* Static connector rails */}
+      <Wire d="M92 88 V 104" />
+      <Wire d="M162 128 H 178 V 66 H 196" />
+      <Wire d="M162 190 H 178 V 66" />
+      <Wire d="M274 88 V 104" />
+      <Wire d="M274 152 V 168" />
+      <Wire d="M352 190 H 368 V 66 H 386" />
+      <Wire d="M462 88 V 104" />
+
+      {/* Column 1: Input & Safety Guardrails */}
+      <Node x="22" y="44" w="140" h="44" title="User Query" sub="clinical / lay" />
+      <Node x="22" y="104" w="140" h="48" title="Guardrails" sub="injection · dosing · crisis" hot />
+      <Node x="22" y="168" w="140" h="44" title="Medical Corpus" sub="NHS · Medline · OGL" />
+
+      {/* Column 2: Hybrid Retrieval & Agent */}
+      <Node x="196" y="44" w="156" h="44" title="Hybrid Retrieval" sub="BM25 + Chroma ONNX" />
+      <Node x="196" y="104" w="156" h="48" title="Cross-Encoder" sub="Hit@1: 0.915 · int8 local" hot />
+      <Node x="196" y="168" w="156" h="44" title="LangGraph Graph" sub="extractive fallback" />
+
+      {/* Column 3: Citation Auditor & Gated Delivery */}
+      <Node x="386" y="44" w="152" h="44" title="Citation Auditor" sub="sentence-by-sentence" hot />
+      <Node x="386" y="104" w="152" h="48" title="Verified Output" sub="cited sources attached" hot />
+      <Node x="386" y="168" w="152" h="44" title="Withhold / Abstain" sub="AUROC 1.000 gate" />
+
+      {/* Unverified claims withheld */}
+      <path
+        d="M538 66 H 550 V 190 H 538"
+        fill="none"
+        stroke="rgba(255,255,255,.2)"
+        strokeWidth="1"
+        strokeDasharray="3 4"
+      />
+      <text x="470" y="98" className="pv__s" style={{ fill: '#d9f227' }}>
+        PASS
+      </text>
+      <text
+        x="546"
+        y="128"
+        className="pv__s"
+        textAnchor="middle"
+        transform="rotate(90 546 128)"
+      >
+        WITHHOLD
+      </text>
+
+      {/* Dynamic packet tracing the full retrieval-to-audit flow */}
+      <Packet track="M92 44 V 128 H 178 V 66 H 274 V 190 H 368 V 66 H 462 V 152" />
+
+      <line x1="22" x2="538" y1="228" y2="228" stroke="rgba(255,255,255,.08)" />
+
+      {/* Benchmark metrics (Left) */}
+      <text x="22" y="248" className="pv__cap">
+        BENCHMARK (56-DOC / 1,077-CHUNK CORPUS)
+      </text>
+      {metrics.map((m, i) => (
+        <g key={m.label} transform={`translate(22 ${260 + i * 22})`}>
+          <text x="0" y="9" className="pv__s">
+            {m.label}
+          </text>
+          <rect x="176" y="2" width="180" height="7" rx="3.5" fill="rgba(255,255,255,.07)" />
+          <rect
+            x="176"
+            y="2"
+            height="7"
+            rx="3.5"
+            fill="#d9f227"
+            className="pv__bar"
+            style={{ '--w': `${180 * m.v}px`, animationDelay: `${i * 0.14}s` }}
+          />
+          <text x="366" y="9" className="pv__s">
+            {m.v.toFixed(3)}
+          </text>
+        </g>
+      ))}
+
+      {/* Clinical test suite card (Right) */}
+      <rect
+        x="416"
+        y="242"
+        width="122"
+        height="102"
+        rx="10"
+        fill="rgba(217,242,39,.08)"
+        stroke="rgba(217,242,39,.32)"
+      />
+      <text x="477" y="278" className="pv__big" textAnchor="middle">
+        149
+      </text>
+      <text x="477" y="296" className="pv__s" textAnchor="middle">
+        TESTS PASSING
+      </text>
+      <text x="477" y="318" className="pv__s" textAnchor="middle" style={{ fill: '#d9f227' }}>
+        0 PRESCRIPTIONS
+      </text>
+      <text x="477" y="334" className="pv__s" textAnchor="middle">
+        DETERMINISTIC
+      </text>
+
+      <text x="22" y="366" className="pv__s">
+        HYBRID SEARCH (BM25 + CHROMADB ONNX) · RE-RANKED BY INT8 CROSS-ENCODER
+      </text>
+      <text x="22" y="382" className="pv__s">
+        SAFETY RUNS BEFORE MODELS · DETERMINISTIC CITATION AUDITOR WITHHOLDS UNVERIFIED CLAIMS
+      </text>
+    </Frame>
+  )
+}
+
 const registry = {
+  trichorag: TrichoVisual,
   factory: FactoryVisual,
   court: CourtVisual,
   signal: SignalVisual,
   scan: ScanVisual,
   ppo: PPOVisual,
   churn: ChurnVisual,
+  kidneyvision: KidneyVisual,
 }
 
 export default function ProjectVisual({ kind }) {
