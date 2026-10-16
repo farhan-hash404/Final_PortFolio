@@ -217,7 +217,7 @@ def build_pdf(filename="public/Muhammad-Farhan-CV.pdf"):
     story.append(HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#2f4858"), spaceAfter=5, spaceBefore=1))
 
     story.append(Paragraph("<b>MootCourtSimulator &mdash; AI Moot Court Platform &mdash; Capstone, GIKI</b>", project_title_style))
-    story.append(Paragraph('<a href="https://github.com/farhan-hash404/MootCourtSimulator" color="#0969da">GitHub</a>', project_meta_style))
+    story.append(Paragraph('<a href="https://youtu.be/Dv34R-Nu404" color="#0969da">Recorded Demo</a> &middot; <a href="https://github.com/farhan-hash404/MootCourtSimulator" color="#0969da">GitHub</a>', project_meta_style))
     story.append(Paragraph("<i>Stack: Python &middot; TypeScript &middot; React/Vite &middot; LangGraph &middot; FastAPI &middot; Express/Drizzle ORM &middot; PostgreSQL &middot; OpenAI (Whisper, GPT-4o, TTS) &middot; Docker</i>", project_meta_style))
     story.append(Paragraph("&bull; Building an AI courtroom where a law student argues a live case against an AI Opposing Counsel while an AI Judge scores the reasoning against a fixed rubric (legal reasoning, argument strength, evidence use, rebuttal handling), returning a performance score with detailed feedback.", bullet_style))
     story.append(Paragraph("&bull; Covers the full moot court cycle &mdash; case briefing, oral arguments, judicial questioning, rebuttals, and final judgment &mdash; via real-time voice streaming (Whisper transcription &rarr; GPT-4o reasoning &rarr; multi-voice TTS) on a 3-tier system (React/Vite client, Express/Drizzle API gateway, FastAPI/LangGraph AI service).", bullet_style))
@@ -226,7 +226,7 @@ def build_pdf(filename="public/Muhammad-Farhan-CV.pdf"):
     story.append(Spacer(1, 3))
 
     story.append(Paragraph("<b>AI Content Factory &mdash; Multi-Agent Content Generation &amp; Evaluation System &mdash; FYP (Team of 2)</b>", project_title_style))
-    story.append(Paragraph('<a href="https://github.com/farhan-hash404/AI-Content-Factory" color="#0969da">GitHub</a>', project_meta_style))
+    story.append(Paragraph('<a href="https://ai-content-factory-lake.vercel.app/" color="#0969da">Live Demo</a> &middot; <a href="https://github.com/farhan-hash404/AI-Content-Factory" color="#0969da">GitHub</a>', project_meta_style))
     story.append(Paragraph("<i>Stack: Python &middot; LangGraph &middot; LangChain &middot; FastAPI &middot; Next.js &middot; GPT-5-mini &middot; Gemini 2.5 Flash &middot; ChromaDB &middot; Tavily &middot; DeepEval</i>", project_meta_style))
     story.append(Paragraph("&bull; Built an orchestrator agent that researches a single topic from authoritative web sources and produces a structured outline; a blog agent then drafts the full article grounded in that research, not free-generated from the prompt.", bullet_style))
     

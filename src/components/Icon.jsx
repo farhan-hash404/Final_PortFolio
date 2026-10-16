@@ -58,6 +58,15 @@ const paths = {
       <path d="M7 10v7M7 7v.01M11.5 17v-4a2.5 2.5 0 0 1 5 0v4" />
     </>
   ),
+  youtube: (
+    <>
+      <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+      <polygon points="10 15 15 12 10 9 10 15" fill="currentColor" stroke="none" />
+    </>
+  ),
+  play: (
+    <polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none" />
+  ),
   arrowUpRight: <path d="M7 17 17 7M9 7h8v8" />,
   arrowRight: <path d="M4 12h15M13 6l6 6-6 6" />,
   arrowLeft: <path d="M20 12H5M11 6l-6 6 6 6" />,

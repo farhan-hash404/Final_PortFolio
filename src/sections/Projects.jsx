@@ -118,7 +118,13 @@ function ProjectRow({ p, onOpenShot }) {
                   href={act.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant={act.variant || 'quiet'}
+                  variant={
+                    act.variant ||
+                    (act.label.toLowerCase().includes('live') ||
+                    act.label.toLowerCase().includes('demo')
+                      ? 'solid'
+                      : 'quiet')
+                  }
                   icon={act.icon || 'external'}
                   className="btn--sm"
                 >

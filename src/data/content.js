@@ -106,7 +106,7 @@ export const featuredProjects = [
     repo: 'https://github.com/farhan-hash404/TrichoRAG',
     live: true,
     actions: [
-      { label: 'Live Demo', href: 'https://tricho-rag.vercel.app/', icon: 'external' },
+      { label: 'Live Demo', href: 'https://tricho-rag.vercel.app/', icon: 'external', variant: 'solid' },
       { label: 'GitHub', href: 'https://github.com/farhan-hash404/TrichoRAG', icon: 'github' },
     ],
     tagline:
@@ -154,8 +154,15 @@ export const featuredProjects = [
     kicker: 'GENERATIVE AI · MULTI-AGENT · FYP',
     meta: 'Final Year Project · Team of 2',
     period: '2025 – 2026',
+    live: true,
     repo: 'https://github.com/farhan-hash404/Ai-Content-Factory',
     actions: [
+      {
+        label: 'Live Demo',
+        href: 'https://ai-content-factory-lake.vercel.app/',
+        icon: 'external',
+        variant: 'solid',
+      },
       { label: 'GitHub', href: 'https://github.com/farhan-hash404/Ai-Content-Factory', icon: 'github' },
     ],
     tagline:
@@ -209,6 +216,12 @@ export const featuredProjects = [
     ],
     repo: 'https://github.com/farhan-hash404/MootCourtSimulator',
     actions: [
+      {
+        label: 'Recorded Demo',
+        href: 'https://youtu.be/Dv34R-Nu404',
+        icon: 'youtube',
+        variant: 'solid',
+      },
       { label: 'GitHub', href: 'https://github.com/farhan-hash404/MootCourtSimulator', icon: 'github' },
     ],
     award: 'Top 5 — GIKI Capstone Competition (out of 35 projects)',
@@ -286,7 +299,7 @@ export const featuredProjects = [
     live: true,
     repo: 'https://github.com/farhan-hash404/Stick-Fighter',
     actions: [
-      { label: 'Live Demo', href: 'https://stickfighterio.netlify.app/', icon: 'external' },
+      { label: 'Live Demo', href: 'https://stickfighterio.netlify.app/', icon: 'external', variant: 'solid' },
       { label: 'GitHub', href: 'https://github.com/farhan-hash404/Stick-Fighter', icon: 'github' },
     ],
     short: [
