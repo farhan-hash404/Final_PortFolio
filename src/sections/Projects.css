@@ -276,6 +276,43 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* The "VIDEO" tag in a video frame's caption, so the demo reads as playable
+   even before the hover cursor shows PLAY. */
+.frame__vtag {
+  margin-right: 7px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: var(--line-accent, rgba(217, 242, 39, 0.14));
+}
+
+/* Play badge centred over the video poster. Grows and brightens on hover so
+   the whole frame reads as a single play target. */
+.frame__play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #0e0e0e;
+  background: rgba(217, 242, 39, 0.92);
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.55);
+  transition:
+    transform 0.4s var(--ease),
+    background 0.25s var(--ease);
+}
+.frame__play svg {
+  margin-left: 3px; /* optical-centre the triangle */
+}
+.frame--video:hover .frame__play {
+  transform: scale(1.08);
+  background: var(--accent, #d9f227);
+}
 
 /* strip arrows */
 .strip__nav {
@@ -471,6 +508,19 @@
   max-width: 100%;
   max-height: calc(92vh - 58px);
   object-fit: contain;
+  margin: 0 auto;
+}
+
+/* The demo plays big: bounded by width and height so the whole frame is on
+   screen at once, on a black mat so letterboxing reads as intentional. */
+.lb__video {
+  display: block;
+  width: min(92vw, 1200px);
+  max-width: 100%;
+  max-height: calc(92vh - 58px);
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #000;
   margin: 0 auto;
 }
 

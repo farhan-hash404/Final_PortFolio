@@ -170,15 +170,20 @@ export const featuredProjects = [
     stack: ['Python', 'LangGraph', 'LangChain', 'LLMs', 'FastAPI', 'Next.js'],
     visual: 'factory',
     /* Backdrop the frames sit on, pulled from the product's own palette so
-       each project reads as its own thing in the strip. */
-    tint: 'linear-gradient(140deg, #2f60d8, #16307a)',
+       each project reads as its own thing in the strip. Warm obsidian/amber. */
+    tint: 'linear-gradient(140deg, #6c461b, #1b1208)',
+    /* Leads the strip — clicking it opens the demo full-size in the lightbox.
+       Served straight from /public so it plays from the portfolio itself. */
+    video: {
+      src: '/shots/content-factory/factory-demo.mp4',
+      poster: '/shots/content-factory/00-demo.jpg',
+      label: 'Walkthrough',
+    },
     shots: [
       { src: '/shots/content-factory/01-dashboard.jpg', label: 'Dashboard' },
-      { src: '/shots/content-factory/02-pipeline.jpg', label: 'Pipeline run' },
-      { src: '/shots/content-factory/03-blog.jpg', label: 'Blog output' },
-      { src: '/shots/content-factory/04-video.jpg', label: 'Video' },
-      { src: '/shots/content-factory/05-images.jpg', label: 'Images' },
-      { src: '/shots/content-factory/06-podcast.jpg', label: 'Podcast' },
+      { src: '/shots/content-factory/02-pipeline.jpg', label: 'Outline review' },
+      { src: '/shots/content-factory/03-activity.jpg', label: 'Activity stream' },
+      { src: '/shots/content-factory/04-blog.jpg', label: 'Studio & assets' },
     ],
     /* Condensed for narrow screens — the full `highlights` below are far
        too much to scroll past on a phone. */

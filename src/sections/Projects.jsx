@@ -28,13 +28,19 @@ function Marquee() {
 }
 
 /**
- * Screenshots first, architecture schematic last. A project with no
- * screenshots yet still gets a strip — just one frame holding the diagram.
+ * Video first (when a project has one), then screenshots, then the
+ * architecture schematic last. A project with no screenshots yet still gets
+ * a strip — just one frame holding the diagram. Frame numbers are assigned
+ * once the whole strip is assembled so they stay sequential.
  */
 function framesFor(p) {
-  const shots = (p.shots || []).map((s, i) => ({ ...s, kind: 'shot', n: i + 1 }))
-  if (!p.visual) return shots
-  return [...shots, { kind: 'schema', visual: p.visual, label: 'Architecture', n: shots.length + 1 }]
+  const frames = []
+  if (p.video) {
+    frames.push({ kind: 'video', src: p.video.src, poster: p.video.poster, label: p.video.label || 'Demo' })
+  }
+  ;(p.shots || []).forEach((s) => frames.push({ ...s, kind: 'shot' }))
+  if (p.visual) frames.push({ kind: 'schema', visual: p.visual, label: 'Architecture' })
+  return frames.map((f, i) => ({ ...f, n: i + 1 }))
 }
 
 export default function Projects() {
@@ -250,37 +256,53 @@ const TILTS = ['-0.8deg', '0.6deg', '0deg', '-0.5deg', '0.7deg', '0deg']
  */
 function Frame({ f, project, onOpenShot }) {
   const isSchema = f.kind === 'schema'
+  const isVideo = f.kind === 'video'
 
   return (
     <button
-      className={`frame ${isSchema ? 'frame--schema' : 'frame--shot'}`}
+      className={`frame ${isSchema ? 'frame--schema' : 'frame--shot'} ${isVideo ? 'frame--video' : ''}`}
       onClick={() =>
         onOpenShot({
           ...f,
           project: project.title,
-          src: isSchema ? f.src : f.src.replace(/\.jpg$/, '-full.jpg'),
+          // The video plays straight from its own source; only screenshots
+          // swap in the uncropped -full.jpg at full size.
+          src: isSchema || isVideo ? f.src : f.src.replace(/\.jpg$/, '-full.jpg'),
         })
       }
       data-cursor="view"
-      data-cursor-label={isSchema ? 'OPEN' : 'VIEW'}
-      aria-label={`${project.title} — ${f.label}, open full size`}
+      data-cursor-label={isVideo ? 'PLAY' : isSchema ? 'OPEN' : 'VIEW'}
+      aria-label={`${project.title} — ${f.label}, ${isVideo ? 'play video' : 'open full size'}`}
       style={{ '--tilt': isSchema ? '0deg' : TILTS[(f.n - 1) % TILTS.length] }}
       /* Thumbnails use the 16:10 crop; the lightbox gets the uncropped
          original, so nothing is lost at full size. */
-      data-full={isSchema ? undefined : f.src.replace(/\.jpg$/, '-full.jpg')}
+      data-full={isSchema || isVideo ? undefined : f.src.replace(/\.jpg$/, '-full.jpg')}
     >
       <div className="frame__media">
         {isSchema ? (
           <ProjectVisual kind={f.visual} />
         ) : (
           <span className="frame__plate">
-            <img src={f.src} alt={`${project.title} — ${f.label}`} loading="lazy" decoding="async" />
+            <img
+              src={isVideo ? f.poster : f.src}
+              alt={`${project.title} — ${f.label}`}
+              loading="lazy"
+              decoding="async"
+            />
+            {isVideo && (
+              <span className="frame__play" aria-hidden="true">
+                <Icon name="play" size={22} />
+              </span>
+            )}
           </span>
         )}
       </div>
       <div className="frame__bar mono">
         <span className="frame__n">{String(f.n).padStart(2, '0')}</span>
-        <span className="frame__label">{f.label}</span>
+        <span className="frame__label">
+          {isVideo && <b className="frame__vtag">VIDEO</b>}
+          {f.label}
+        </span>
       </div>
     </button>
   )
@@ -317,6 +339,18 @@ function Lightbox({ shot, onClose }) {
             <div className="lb__schema">
               <ProjectVisual kind={shot.visual} />
             </div>
+          ) : shot.kind === 'video' ? (
+            <video
+              className="lb__video"
+              src={shot.src}
+              poster={shot.poster}
+              controls
+              autoPlay
+              playsInline
+              preload="auto"
+            >
+              Your browser does not support embedded video.
+            </video>
           ) : (
             <img src={shot.src} alt={`${shot.project} — ${shot.label}`} />
           )}
