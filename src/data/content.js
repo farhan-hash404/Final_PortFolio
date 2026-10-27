@@ -215,9 +215,10 @@ export const featuredProjects = [
     shots: [
       { src: '/shots/mootcourt/01-case-library.jpg', label: 'Case library' },
       { src: '/shots/mootcourt/02-case-brief.jpg', label: 'Case brief' },
-      { src: '/shots/mootcourt/03-courtroom.jpg', label: 'The courtroom' },
-      { src: '/shots/mootcourt/04-chambers.jpg', label: 'Chambers' },
-      { src: '/shots/mootcourt/05-statutes.jpg', label: 'Statutes' },
+      { src: '/shots/mootcourt/03-courtroom.jpg', label: 'Opening submissions' },
+      { src: '/shots/mootcourt/04-examination.jpg', label: 'Examination-in-chief' },
+      { src: '/shots/mootcourt/05-chambers.jpg', label: 'Chambers' },
+      { src: '/shots/mootcourt/06-statutes.jpg', label: 'Statutes' },
     ],
     repo: 'https://github.com/farhan-hash404/MootCourtSimulator',
     actions: [
