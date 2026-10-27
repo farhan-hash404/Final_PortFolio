@@ -212,6 +212,13 @@ export const featuredProjects = [
     live: true,
     /* Parchment into walnut — the cause-list palette the app itself uses. */
     tint: 'linear-gradient(140deg, #8d6c3d, #41301b)',
+    /* Leads the strip — clicking it opens the demo full-size in the lightbox,
+       served straight from /public so it plays from the portfolio itself. */
+    video: {
+      src: '/shots/mootcourt/mootcourt-demo.mp4',
+      poster: '/shots/mootcourt/00-demo.jpg',
+      label: 'Walkthrough',
+    },
     shots: [
       { src: '/shots/mootcourt/01-case-library.jpg', label: 'Case library' },
       { src: '/shots/mootcourt/02-case-brief.jpg', label: 'Case brief' },
